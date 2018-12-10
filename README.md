@@ -6,7 +6,9 @@
 
 ***Decentralising scholarly communication***
 
-</br></br></br>
+</br></br>
+
+*Omni is in early development. Marcus is currently slamming through web development courses so we can deliver a proof of concept as soon as possible. Cameron is hustling for funding support and potential partnerships. If you're interested in helping, even to just give advice, please let us know.*
 
 # Introduction
 
