@@ -1,6 +1,6 @@
 </br>
 
-<img align="left" width="100" height="100" src="logo.png">
+<img align="left" width="150" height="150" src="logo.png">
 
 # The Omni Project
 
