@@ -74,7 +74,20 @@ At a glance, Omni offers the following capabilities:
 
 ## Technology
 
-All data are stored in a Holochain *Distributed Hash Table (DHT)*, which is a public database not hosted by any central party, but is supported by all users of Omni using their currently unused spare computing resources. As long as some users are running the Omni application, no one can shut it down. Since everyone owns their own data in Omni, no one can prevent an author from sharing their research to as many communities as they wish.
+Omni is governed entirely its users, meaning no single entity has control over the platform, and it uses an accountability-based system to incentivise better behaviour. As a result, the academic community can become a fully autonomous organisation, without the need for a middleman or top-down incentive structure.
+
+> The Omni application will be hosted on a fully distributed, peer-to-peer protocol called [Holochain](http://www.holochain.org). It's a truly decentralised, democratic and secure Internet, with the capacity for large-scale social coordination.
+
+This technology is enabling us to build Omni on a system of value creation, compensation, transparency, accountability and community engagement (principles that academia *should* be built on). In summary, Holochain can enable the following:
+
+- Tracking and acknowledging all actions made by users
+- Protecting authorship and intellectual property rights
+- Rewarding anybody for creating or contributing value
+- Incentivising more productive and collaborative behaviour
+
+All data will be stored in a Holochain *Distributed Hash Table* (DHT), which is a public database not hosted by any central party, but is supported by all users of Omni using their currently unused spare computing resources (think of a decentralised AWS). And since everyone owns their own data in Omni, no one can prevent an author from sharing their research to as many communities as they wish.
+
+## Advantages of using Holochain
 
 We aren't the only ones in the open source community working on new tools for scholarly researchers, and neither are we the only ones aiming to decentralise the publishing system—namely, the [Aletheia](https://github.com/aletheia-foundation/aletheia-whitepaper/blob/master/WHITE-PAPER.md) application built on Ethereum—but we see building Omni on Holochain [as the best way](https://github.com/holochain/holochain-proto/wiki/FAQ) to pull these efforts together into an efficient and scalable distributed application, uninhibited by the high costs and limitations of blockchain. We encourage others working on similar applications and microservices to also consider using Holochain.
 
