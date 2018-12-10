@@ -54,7 +54,7 @@ We're not creating another repository, journal or even publisher. Omni is a *pub
 
 > Omni is an **open source** and **distributed** web application enabling scholars to write, share, discuss and review research papers with academic communities.
 
-We're essentially building a "scholarly commons" for more accessible, open and participatory research. The process of editing, dissemination, discussion and review can be performed by any user of Omni, at any time. We expect this to drastically improve the flow of information and ideas, and all contributions are tracked and acknowledged. By rewarding people for contributing value to the research *process*, rather than focusing solely on *outcomes*, we can incentivise more valid, scientific and organic knowledge creation.
+We're essentially building a "scholarly commons" for more accessible, open and participatory research. The process of editing, dissemination, discussion and review can be performed by any user of Omni, which can drastically improve the flow and evolution of information, knowledge and ideas. And by rewarding those for contributing genuine value to the research process (rather than focusing solely on research outcomes) we can incentivise more valid, scientific and organic knowledge creation.
 
 At a glance, Omni offers the following capabilities:
 
