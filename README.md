@@ -10,7 +10,11 @@
 
 > *Omni is in early development. Marcus is currently slamming through web development courses so we can deliver a proof of concept as soon as possible. Cameron is hustling for funding support and potential partnerships. If you're interested in helping, even to just give advice, please let us know.*
 
-The Omni Project is helping to bring about the next generation of scholarly communication. The current scholarly publishing system is broken—new knowledge that benefits everyone is locked behind expensive paywalls and certain individuals/companies gain disproportionate levels of power and influence, allowing them to shape the system to work for them and not for the research ecosystem as a whole. More researchers and institutions are willing to fork the bill to allow anyone to read their research, but this can't possibly be sustainable. Simply put, scholars, institutions and citizens **are getting screwed**, and we're only just beginning to wake up to this fact—publishers still write the rules of the game.
+At *The Omni Project*, we’re helping build the next generation of scholarly communications. The academic publishing system is deeply broken — the dissemination of research has become tightly intertwined with the commercial interests of publishers and the growing importance of reputation in academia.
+
+We want to help break this industry deadlock, by disentangling research output from profit and prestige. The best way to achieve this is by giving academics the tools to collectively build an alternative model from the ground-up, which can allow a fundamentally better and more sustainable system to emerge.
+
+Our vision for *The Omni Project* is to start bringing the world's academics closer together, leveraging the collective intelligence of academic communities, and scaling academic discussion to an unprecedented level. Afterall, this is what the Internet was originally intended for, and only then can academia re-align with its original purpose — to share new knowledge with the world.
 
 # Introduction
 
@@ -46,18 +50,6 @@ The intellectual pursuit of discovery always produces tremendous value to societ
 
 # Introducing *The Omni Project*
 
-> A piece of knowledge, unlike a piece of physical property, can be shared by large groups of people without making anybody poorer *— Aaron Swartz (1986-2013)*
-
-## Mission
-
-At *The Omni Project*, we’re helping build the next generation of scholarly communications. The academic publishing system is deeply broken — the dissemination of research has become tightly intertwined with the commercial interests of publishers and the growing importance of reputation in academia.
-
-We want to help break this industry deadlock, by disentangling research output from profit and prestige. The best way to achieve this is by giving academics the tools to collectively build an alternative model from the ground-up, which can allow a fundamentally better and more sustainable system to emerge.
-
-Our vision for *The Omni Project* is to start bringing the world's academics closer together, leveraging the collective intelligence of academic communities, and scaling academic discussion to an unprecedented level. Afterall, this is what the Internet was originally intended for, and only then can academia re-align with its original purpose — to share new knowledge with the world.
-
-## Concept
-
 We're not creating another repository, journal or even publisher. Omni is a *public, digital space* for academics to share their work without barriers, quickly reach their intended audiences and receive feedback from anyone in the academic community. With an open review system, and quality assurance protocols decided on by the Omni community, we see the potential for academic research and scholarly communications to improve dramatically.
 
 > Omni is an **open source** and **distributed** web application enabling scholars to write, share, discuss and review research papers with academic communities.
@@ -72,7 +64,7 @@ At a glance, Omni offers the following capabilities:
 - Review papers and help the community decide what valid research looks like
 - Get rewarded for all your contributions, and build a more meaningful reputation
 
-## Technology
+## Decentralised Technology
 
 Omni is governed entirely its users, meaning no single entity has control over the platform, and it uses an accountability-based system to incentivise better behaviour. As a result, the academic community can become a fully autonomous organisation, without the need for a middleman or top-down incentive structure.
 
