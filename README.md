@@ -4,31 +4,29 @@
 
 # The Omni Project
 
-***Decentralising scholarly communication***
+***Decentralising scholarly communications***
 
 </br></br>
 
-*Omni is in early development. Marcus is currently slamming through web development courses so we can deliver a proof of concept as soon as possible. Cameron is hustling for funding support and potential partnerships. If you're interested in helping, even to just give advice, please let us know.*
-
-# Introduction
+> *Omni is in early development. Marcus is currently slamming through web development courses so we can deliver a proof of concept as soon as possible. Cameron is hustling for funding support and potential partnerships. If you're interested in helping, even to just give advice, please let us know.*
 
 The Omni Project is helping to bring about the next generation of scholarly communication. The current scholarly publishing system is broken—new knowledge that benefits everyone is locked behind expensive paywalls and certain individuals/companies gain disproportionate levels of power and influence, allowing them to shape the system to work for them and not for the research ecosystem as a whole. More researchers and institutions are willing to fork the bill to allow anyone to read their research, but this can't possibly be sustainable. Simply put, scholars, institutions and citizens **are getting screwed**, and we're only just beginning to wake up to this fact—publishers still write the rules of the game.
 
-# Motivations
+# Introduction
 
 The journal publication model made sense for the last few hundreds of years, but has rapidly become outdated within the new digital context. Although many journals have gone paperless, the *process* of scholarly communications has not changed—publishing and journal issuing has merely been rendered in a digital format, and publishers have not made much use of the many powerful digital features we have today.
 
-## False scarcity and unnecessary inaccessibility
+## False scarcity
 
 The publishing system relies on false scarcity and artificial inaccessibility to reap the profits of the priceless work of authors. Not only is this unfair for researchers but prevents plenty of valuable knowledge being shared in research ecosystems and society more generally. Open Access was a good start to helping making research accessible, but there is still a lot of potential to improve on it, and in a way that is sustainable for the research ecosystem—not the publishing giants (who, arguably, do not deserve as much money as they get). Although editing is important, the system can't only work for the editors, which is why we're taking a stand *to put researchers, institutions and citizens first*.
 
 A lot of useful work goes unpublished (e.g. null results, replication studies, full data sets, mistakes worth learning from, simulation code, and more). With no straightforward way to share this knowledge around, this often isn't easily accessible.
 
-## Perverse prestige system
+## Prestige economy
 
 The reputation of researchers in the current model is based on an overly reductive indicators of value, with the main culprit: the impact factor. The number of reads and citations of articles is [not enough to accurately represent](http://backreaction.blogspot.com/2017/03/academia-is-fucked-up-so-why-isnt.html) the value researchers contribute to the research ecosystem and/or to society. As scholarly communications is further digitised, we see an opportunity to make visible the many kinds of contributions people make to the ecosystem and, ideally, compensate them for these efforts. We need a [currency](http://www.artbrock.com/blog/designing-social-flows-chapter-6-designing-incentives) system which promotes good science and gets information to the relevant people, not a competitive model based on pumping out paper after paper.
 
-## Impact vs. quality
+## Impact over quality
 
 Although the validity of research is a prerequisite for getting an article through peer-review, it is treated as binary — valid or invalid. If there's anything I've learned from studying science it's that any claim is constantly being questioned. Any model of - or conclusion about - reality is only an assertation of an individual or group at a particular point in time, and rarely something that all parties will forever agree on. In the current system, such conclusions 'become truth' due to the decision of a small number of anonymous peer-reviewers, and not by the scholarly community collectively. We're not saying that all scholars are experts in every speciality and ought to state their opinion on every article, but that any member of the scholarly community *should be able to indicate* their understanding of an article's validity/quality from their epistemological position, at a particular point in time and always able to be updated.
 
@@ -42,17 +40,41 @@ Articles are still mostly treated as static PDFs with the figures and tables mas
 
 We've been interested in the developments of social networking platforms and how strongly they can shape human behaviour, for good or for worse. On one side you've got the likes of Facebook, Twitter and YouTube where comments can quickly devolve into echo-chambers and polarised communities which breed outrage. On these platforms, content is often micromanaged to maximise user attention and to serve targeted advertising. On the other hand, communities like Wikipedia, Reddit, Stack Overflow and Quora (and even 4chan) are capable of aggregating high quality content and facilitating insightful and productive discussions. This shows the power our digital architectures and community spaces can have on individual and collective behaviour, and much could be learned from these to help us design systems that prioritise relevant content to users and maximise collective intelligence.
 
-## Centralised power (Strengthening the Scholarly Commons)
+## Enclosure
 
 The intellectual pursuit of discovery always produces tremendous value to society, yet we have let ourselves become [enclosed](https://en.wikipedia.org/wiki/Enclosure) by the publishers who tell us they are absolutely critical and we have no choice but to go through them. Research ought to be an [act of commoning](http://wealthofthecommons.org/essay/introduction-commons-transformative-vision), something that is done for the sake of collective learning, not to make a profit for publishers or enable scholars to beat their rivals. Not even [Open Access scholars have avoided enclosure](https://www.triple-c.at/index.php/tripleC/article/view/525), with [Hindawi, an Open Access publisher, having a higher profit margin (52%) than Elsevier (36%) in 2010](http://threader.ecs.soton.ac.uk/lists/boaiforum/2769.html). It's time for an alternative that resists enclosure and promotes the things scholars actually care about: humanity and good science, for a start.
 
-# Omni: A fully accessible digital space for sharing and discussing new knowledge
+# Introducing *The Omni Project*
 
-Omni is an **open source** and **distributed** web application enabling scholars to share their research with all relevant audiences, without delays. There is no publisher or publishing in Omni, yet all processes of editing, peer-review, discussion and dissemination of new knowledge can be performed by any user of Omni, and all valuable contributions are tracked.
+> A piece of knowledge, unlike a piece of physical property, can be shared by large groups of people without making anybody poorer *— Aaron Swartz (1986-2013)*
+
+## Mission
+
+At *The Omni Project*, we’re helping build the next generation of scholarly communications. The academic publishing system is deeply broken — the dissemination of research has become tightly intertwined with the commercial interests of publishers and the growing importance of reputation in academia.
+
+We want to help break this industry deadlock, by disentangling research output from profit and prestige. The best way to achieve this is by giving academics the tools to collectively build an alternative model from the ground-up, which can allow a fundamentally better and more sustainable system to emerge.
+
+Our vision for *The Omni Project* is to start bringing the world's academics closer together, leveraging the collective intelligence of academic communities, and scaling academic discussion to an unprecedented level. Afterall, this is what the Internet was originally intended for, and only then can academia re-align with its original purpose — to share new knowledge with the world.
+
+## Concept
+
+We're not creating another repository, journal or even publisher. Omni is a *public, digital space* for academics to share their work without barriers, quickly reach their intended audiences and receive feedback from anyone in the academic community. With an open review system, and quality assurance protocols decided on by the Omni community, we see the potential for academic research and scholarly communications to improve dramatically.
+
+> Omni is an **open source** and **distributed** web application enabling scholars to write, share, discuss and review research papers with academic communities.
+
+We're essentially building a "scholarly commons" for more accessible, open and participatory research. The process of editing, dissemination, discussion and review can be performed by any user of Omni, at any time. We expect this to drastically improve the flow of information and ideas, and all contributions are tracked and acknowledged. By rewarding people for contributing value to the research *process*, rather than focusing solely on *outcomes*, we can incentivise more valid, scientific and organic knowledge creation.
+
+At a glance, Omni offers the following capabilities:
+
+- Write articles using an advanced online editor, or upload your own
+- Share articles with communities, get feedback and start discussions
+- Discover the best, most recent and controversial papers in your field
+- Review papers and help the community decide what valid research looks like
+- Get rewarded for all your contributions, and build a more meaningful reputation
+
+## Technology
 
 All data are stored in a Holochain *Distributed Hash Table (DHT)*, which is a public database not hosted by any central party, but is supported by all users of Omni using their currently unused spare computing resources. As long as some users are running the Omni application, no one can shut it down. Since everyone owns their own data in Omni, no one can prevent an author from sharing their research to as many communities as they wish.
-
-Omni is not a journal, but a *public digital space* for authors to present their research and receive feedback from anyone in the academic community. With an open peer-review system, and quality assurance protocols decided on by the Omni community, we see the potential for academic research and scholarly communications to improve dramatically.
 
 We aren't the only ones in the open source community working on new tools for scholarly researchers, and neither are we the only ones aiming to decentralise the publishing system—namely, the [Aletheia](https://github.com/aletheia-foundation/aletheia-whitepaper/blob/master/WHITE-PAPER.md) application built on Ethereum—but we see building Omni on Holochain [as the best way](https://github.com/holochain/holochain-proto/wiki/FAQ) to pull these efforts together into an efficient and scalable distributed application, uninhibited by the high costs and limitations of blockchain. We encourage others working on similar applications and microservices to also consider using Holochain.
 
