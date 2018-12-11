@@ -62,7 +62,7 @@ At a glance, Omni offers the following capabilities:
 - Share articles with communities, get feedback and start discussions
 - Discover the best, most recent and controversial papers in your field
 - Review papers and help the community decide what valid research looks like
-- Watch your reputation reflect the quality and consistancy of your contributions
+- Manage your reputation, which reflects the quality and consistancy of your contributions
 
 ## Decentralised Technology
 
