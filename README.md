@@ -86,3 +86,8 @@ We aren't the only ones in the open source community working on new tools for sc
 The interoperability of Holochain applications means Omni can immediately benefit from the work of other open source projects. Holochain also enables the community to administrate the Omni application themselves (much more simply than Ethereum DAOs), making it the way they want it—not just how we think it should be. Again, all of these can be achieved at much lower costs than an Ethereum version of Omni would. Holochain is environmentally sustainable as no computing power is wasted on busywork. Holochain is cryptographically secure and tamper-proof, and Holochain applications can't 'go down' as long as at least one computer is running the application—the Omni archive of research will never disappear. Even if 50% of users suddenly dropped off the Omni network, all of the data would still be available.
 
 You can learn more about the Holochain networking protocol [here](https://www.notion.so/Holochain-Reading-List-352388be758f4356a6da1fbb7962f87c).
+
+### Further reading
+
+- [*Patterns of Commoning* by David Bollier and Silke Helfrich](http://patternsofcommoning.org/overture-2/)
+- [*Wealth of the Commons* by David Bollier and Silke Helfrich](http://wealthofthecommons.org/essay/introduction-commons-transformative-vision)
