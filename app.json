@@ -1,6 +1,6 @@
 {
   "name": "Omni",
-  "description": "Distributed publishing platform built on Holochain. Facilitates peer-reviewing of articles and dissemination of knowledge, all without journals or publishers.",
+  "description": "Distributed publishing platform built with Holochain. Facilitates peer-reviewing of articles and dissemination of knowledge, all without journals or publishers.",
   "authors": [
     {
       "identifier": "Marcus Newton <marcus@omniapp.org>",
