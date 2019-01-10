@@ -4,19 +4,31 @@ const test = require('tape');
 const Container = require('@holochain/holochain-nodejs');
 
 // instantiate an app from the DNA JSON bundle
-const app = Container.loadAndInstantiate("dist/bundle.json")
+const container = Container.loadAndInstantiate("dist/bundle.json")
 
 // activate the new instance
-app.start()
+container.start()
 
-test('description of example test', (t) => {
-  // Make a call to a Zome function
-  // indicating the capability and function, and passing it an input
-  // const result = app.call("zome-name", "capability-name", "function-name", {})
 
-  // check for equality of the actual and expected results
-  // t.equal(result, "expected result!")
+// Tests
+test('try creating an article', (t) => {
+  t.plan(1)
 
-  // ends this test
+  const input = {
+    "article": {
+      "title": "Article Title",
+      "abst": "abstract text",
+      "body": "body of article"      
+    }
+  }
+
+  const expect = {
+    "success": true
+  }
+
+  const result = container.call("articles", "main", "create_article", input)
+
+  t.looseEqual(result, expect)
+
   t.end()
 })
