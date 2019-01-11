@@ -34,8 +34,9 @@ struct Article {
 fn handle_create_article(article: Article) -> JsonString {
     let article_entry = Entry::new(EntryType::App("article".into()), article);
 
-    match hdk::commit_entry(&article_entry) {
-        Ok(_) => json!({"success": true}).into(),
+    match hdk::commit_entry(&article_entry)
+    {
+        Ok(address) => json!({"success": true, "address": address}).into(),
         Err(hdk_err) => hdk_err.into()
     }
 }
@@ -52,17 +53,7 @@ define_zome! {
         validation_package: || hdk::ValidationPackageDefinition::Entry,
         validation: |article: Article, _ctx: hdk::ValidationData| {
             Ok(())
-        }//,
-        // links: [
-        // from!(
-        //     "AGENT_ADDRESS", // is this correct?
-        //     tag: "author",
-        //     validation_package: || hdk::ValidationPackageDefinition::Entry,
-        //     validation: |base: Address, target: Address, _ctx: hdk::ValidationData| {
-        //         Ok(())
-        //     }
-        // )
-        // ]
+        }
     )
     ]
 
@@ -75,16 +66,6 @@ define_zome! {
                 outputs: |result: JsonString|,
                 handler: handle_create_article
             }
-            // get_article: {
-            //     inputs: |article_addr: HashString|,
-            //     outputs: |result: JsonString|,
-            //     handler: handle_get_article
-            // }
-            // update_article: {
-            //     inputs: |article: Article, article_addr: HashString|,
-            //     outputs: |result: JsonString|,
-            //     handler: handle_update_article
-            // }
         }
     }
 }
