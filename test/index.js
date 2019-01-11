@@ -12,8 +12,6 @@ container.start()
 
 // Tests
 test('try creating an article', (t) => {
-  t.plan(2)
-
   const input = {
     article: {
       title: "Article Title",
@@ -34,3 +32,39 @@ test('try creating an article', (t) => {
 
   t.end()
 })
+
+
+test('get created article', (t) => {
+  const input = {
+    article_addr: "QmWGENspZamWiJMXsYX7ChMTTtbHSP3aUFHcJSibioqKxE"
+  }
+
+  const expect = {
+    title: "Article Title",
+    abst: "abstract text",
+    body: "body of article"
+  }
+
+  const result = container.call("articles", "main", "get_article", input)
+  console.log(result);
+
+  t.deepEqual(result, expect)
+
+  t.end()
+})
+
+
+// test('delete created article', (t) => {
+//   const input = {
+//     article_addr: "QmWGENspZamWiJMXsYX7ChMTTtbHSP3aUFHcJSibioqKxE"
+//   }
+//
+//   const expect = { "success": true }
+//
+//   const result = container.call("articles", "main", "delete_article", input)
+//   console.log(result);
+//
+//   t.deepEqual(result, expect)
+//
+//   t.end()
+// })

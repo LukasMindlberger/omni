@@ -10,14 +10,17 @@ extern crate holochain_core_types_derive;
 #[macro_use]
 extern crate serde_json;
 
-use hdk::holochain_core_types::{
-    hash::HashString,
-    error::HolochainError,
-    entry::Entry,
-    dna::zome::entry_types::Sharing,
-    entry::entry_type::EntryType,
-    json::JsonString,
-    cas::content::Address
+use hdk::{
+    error::{ZomeApiError, ZomeApiResult},
+    holochain_core_types::{
+        hash::HashString,
+        error::HolochainError,
+        entry::Entry,
+        dna::zome::entry_types::Sharing,
+        entry::entry_type::EntryType,
+        json::JsonString,
+        cas::content::Address
+    },
 };
 
 
@@ -34,12 +37,35 @@ struct Article {
 fn handle_create_article(article: Article) -> JsonString {
     let article_entry = Entry::new(EntryType::App("article".into()), article);
 
-    match hdk::commit_entry(&article_entry)
-    {
-        Ok(address) => json!({"success": true, "address": address}).into(),
+    match hdk::commit_entry(&article_entry) {
+        Ok(article_addr) => json!({"success": true, "address": article_addr}).into(),
         Err(hdk_err) => hdk_err.into()
     }
 }
+
+fn handle_get_article(article_addr: HashString) -> JsonString {
+    match hdk::get_entry(article_addr) {
+        Ok(Some(entry)) => entry.value().to_owned(),
+        Ok(None) => {}.into(),
+        Err(hdk_err) => hdk_err.into()
+    }
+}
+
+// fn handle_update_article(article: Article, article_addr: HashString) -> JsonString {
+//     let article_entry = Entry::new(EntryType::App("article".into()), article);
+//
+//     match hdk::update_entry(&article_entry, article_addr, "update article") {
+//         Ok(article_addr) => json!({"success": true, "address": article_addr}).into(),
+//         Err(hdk_err) => hdk_err.into()
+//     }
+// }
+
+// fn handle_delete_article(article_addr: HashString) -> JsonString {
+//     match hdk::remove_entry(article_addr, "delete article") {
+//         Ok(_) => json!({"success": true}).into(),
+//         Err(hdk_err) => hdk_err.into()
+//     }
+// }
 
 
 // Validation logic & links
@@ -66,6 +92,21 @@ define_zome! {
                 outputs: |result: JsonString|,
                 handler: handle_create_article
             }
+            get_article: {
+                inputs: |article_addr: HashString|,
+                outputs: |result: JsonString|,
+                handler: handle_get_article
+            }
+            // update_article: {
+            //     inputs: |article_addr: HashString, article: Article|,
+            //     outputs: |result: JsonString|,
+            //     handler: handle_update_article
+            // }
+            // delete_article: {
+                //     inputs: |article_addr: HashString|,
+                //     outputs: |result: JsonString|,
+                //     handler: handle_delete_article
+                // }
         }
     }
 }
