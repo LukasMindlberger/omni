@@ -3,22 +3,20 @@
 const test = require('tape');
 const Container = require('@holochain/holochain-nodejs');
 
-// instantiate an app from the DNA JSON bundle
+// instantiate app from DNA JSON bundle into hc container
 const container = Container.loadAndInstantiate("dist/bundle.json")
 
-// activate the new instance
+// activate container instance
 container.start()
 
 
 // Tests
 test('try creating an article', (t) => {
-  t.plan(1)
-
   const input = {
-    "article": {
-      "title": "Article Title",
-      "abst": "abstract text",
-      "body": "body of article"      
+    article: {
+      title: "Article Title",
+      abst: "abstract text",
+      body: "body of article"
     }
   }
 
@@ -27,8 +25,46 @@ test('try creating an article', (t) => {
   }
 
   const result = container.call("articles", "main", "create_article", input)
+  console.log(result);
 
-  t.looseEqual(result, expect)
+  t.deepEqual(result.success, expect.success)
+  t.deepEqual(result.address.length, 46)
 
   t.end()
 })
+
+
+test('get created article', (t) => {
+  const input = {
+    article_addr: "QmWGENspZamWiJMXsYX7ChMTTtbHSP3aUFHcJSibioqKxE"
+  }
+
+  const expect = {
+    title: "Article Title",
+    abst: "abstract text",
+    body: "body of article"
+  }
+
+  const result = container.call("articles", "main", "get_article", input)
+  console.log(result);
+
+  t.deepEqual(result, expect)
+
+  t.end()
+})
+
+
+// test('delete created article', (t) => {
+//   const input = {
+//     article_addr: "QmWGENspZamWiJMXsYX7ChMTTtbHSP3aUFHcJSibioqKxE"
+//   }
+//
+//   const expect = { "success": true }
+//
+//   const result = container.call("articles", "main", "delete_article", input)
+//   console.log(result);
+//
+//   t.deepEqual(result, expect)
+//
+//   t.end()
+// })
