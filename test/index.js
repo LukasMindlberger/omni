@@ -7,25 +7,26 @@ const Container = require('@holochain/holochain-nodejs');
 const dnaPath = "dist/bundle.json"
 
 // Multi-agent container scenario testing (waiting for container version 0.3.0)
-// const multi_container = (function() {
-//   const agentMarcus = Config.agent("marcus")
-//   const agentCameron = Config.agent("cameron")
-//
-//   const dna = Config.dna(dnaPath)
-//
-//   const instanceMarcus = Config.instance(agentMarcus, dna)
-//   const instanceCameron = Config.instance(agentCameron, dna)
-//
-//   const containerConfig = Config.container([instanceMarcus, instanceCameron])
-//   return new Container(containerConfig)
-// }());
+/*
+const multi_container = (function() {
+  const agentMarcus = Config.agent("marcus")
+  const agentCameron = Config.agent("cameron")
 
-// activate container instance
-// multi_container.start()
+  const dna = Config.dna(dnaPath)
 
-// const marcus = multi_container.makeCaller('marcus', dnaPath)
-// const cameron = multi_container.makeCaller('cameron', dnaPath)
+  const instanceMarcus = Config.instance(agentMarcus, dna)
+  const instanceCameron = Config.instance(agentCameron, dna)
 
+  const containerConfig = Config.container([instanceMarcus, instanceCameron])
+  return new Container(containerConfig)
+}());
+
+activate container instance
+multi_container.start()
+
+const marcus = multi_container.makeCaller('marcus', dnaPath)
+const cameron = multi_container.makeCaller('cameron', dnaPath)
+*/
 
 // Basic container scenario testing
 const container = Container.loadAndInstantiate(dnaPath)
@@ -79,10 +80,12 @@ test('get article', (t) => {
 
 
 // Multi-agent tests
-// test('agentId', (t) => {
-//   t.plan(2)
-//
-//   t.ok(marcus.agentId)
-//
-//   t.notEqual(marcus.agentId, cameron.agentId)
-// })
+/*
+test('agentId', (t) => {
+  t.plan(2)
+
+  t.ok(marcus.agentId)
+
+  t.notEqual(marcus.agentId, cameron.agentId)
+})
+*/

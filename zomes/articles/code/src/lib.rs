@@ -1,4 +1,3 @@
-#![feature(uniform_paths)]
 #![feature(try_from)]
 
 #[macro_use]
@@ -10,8 +9,8 @@ extern crate holochain_core_types_derive;
 #[macro_use]
 extern crate serde_json;
 
-use article::Article;
 pub mod article;
+use self::article::Article;
 
 use hdk::{
     holochain_core_types::{
@@ -19,6 +18,7 @@ use hdk::{
         dna::zome::entry_types::Sharing,
     },
 };
+
 
 // Validation logic & links
 define_zome! {
