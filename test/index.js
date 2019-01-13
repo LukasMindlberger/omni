@@ -2,16 +2,41 @@
 // To learn more, go here: https://github.com/substack/tape
 const test = require('tape');
 const Container = require('@holochain/holochain-nodejs');
+// const { Config, Container } = require('@holochain/holochain-nodejs');
 
-// instantiate app from DNA JSON bundle into hc container
-const container = Container.loadAndInstantiate("dist/bundle.json")
+const dnaPath = "dist/bundle.json"
 
-// activate container instance
+// Multi-agent container scenario testing (waiting for container version 0.3.0)
+/*
+const multi_container = (function() {
+  const agentMarcus = Config.agent("marcus")
+  const agentCameron = Config.agent("cameron")
+
+  const dna = Config.dna(dnaPath)
+
+  const instanceMarcus = Config.instance(agentMarcus, dna)
+  const instanceCameron = Config.instance(agentCameron, dna)
+
+  const containerConfig = Config.container([instanceMarcus, instanceCameron])
+  return new Container(containerConfig)
+}());
+
+activate container instance
+multi_container.start()
+
+const marcus = multi_container.makeCaller('marcus', dnaPath)
+const cameron = multi_container.makeCaller('cameron', dnaPath)
+*/
+
+// Basic container scenario testing
+const container = Container.loadAndInstantiate(dnaPath)
+
 container.start()
 
 
-// Tests
-test('try creating an article', (t) => {
+// Non-agent tests
+test('create an article', (t) => {
+  t.plan(2)
   const input = {
     article: {
       title: "Article Title",
@@ -33,8 +58,8 @@ test('try creating an article', (t) => {
   t.end()
 })
 
-
-test('get created article', (t) => {
+test('get article', (t) => {
+  t.plan(1)
   const input = {
     article_addr: "QmWGENspZamWiJMXsYX7ChMTTtbHSP3aUFHcJSibioqKxE"
   }
@@ -54,17 +79,13 @@ test('get created article', (t) => {
 })
 
 
-// test('delete created article', (t) => {
-//   const input = {
-//     article_addr: "QmWGENspZamWiJMXsYX7ChMTTtbHSP3aUFHcJSibioqKxE"
-//   }
-//
-//   const expect = { "success": true }
-//
-//   const result = container.call("articles", "main", "delete_article", input)
-//   console.log(result);
-//
-//   t.deepEqual(result, expect)
-//
-//   t.end()
-// })
+// Multi-agent tests
+/*
+test('agentId', (t) => {
+  t.plan(2)
+
+  t.ok(marcus.agentId)
+
+  t.notEqual(marcus.agentId, cameron.agentId)
+})
+*/
