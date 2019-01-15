@@ -1,57 +1,14 @@
 // This test file uses the tape testing framework.
 // To learn more, go here: https://github.com/substack/tape
 const test = require('tape')
-const { Config, Container } = require('@holochain/holochain-nodejs')
+const Container = require('@holochain/holochain-nodejs')
 
-const dnaPath = "dist/bundle.json"
-const dna = Config.dna(dnaPath)
+dnaPath = "dist/bundle.json"
 
-const aliceName = "alice"
-const tashName = "tash"
+const container = Container.loadAndInstantiate(dnaPath)
 
-const agentAlice = Config.agent(aliceName)
-const agentTash = Config.agent(tashName)
-const instanceAlice = Config.instance(agentAlice, dna)
-const instanceTash = Config.instance(agentTash, dna)
+container.start()
 
-const config = Config.container([instanceAlice, instanceTash])
-
-const container = new Container(config)
-
-const aliceInstanceId = aliceName + '::' + dnaPath
-const tashInstanceId = tashName + '::' + dnaPath
-
-test('create an article', (t) => {
-  t.plan(2)
-
-  const input = {
-    article: {
-      title: "Article Title",
-      abst: "abstract text",
-      body: "body of article"
-    }
-  }
-
-  const expect = {
-    "success": true
-  }
-
-  const result = container.call(aliceInstanceId, "articles", "main", "create_article", input)
-
-  console.log(result);
-
-  t.deepEqual(result.success, expect.success)
-  t.deepEqual(result.address.length, 46)
-
-  t.end()
-})
-
-// stop all running instances
-container.stop()
-
-
-
-/*
 test('create an article', (t) => {
   t.plan(2)
   const input = {
@@ -94,4 +51,3 @@ test('get article', (t) => {
 
   t.end()
 })
-*/
