@@ -1,28 +1,29 @@
 // This test file uses the tape testing framework.
 // To learn more, go here: https://github.com/substack/tape
 const test = require('tape')
+
 const { Config, Container } = require('@holochain/holochain-nodejs')
 
-const dnaPath = "dist/bundle.json"
-const dna = Config.dna(dnaPath)
+const dnaPath = "./dist/bundle.json"
 
 const aliceName = "alice"
-const tashName = "tash"
 
-const agentAlice = Config.agent(aliceName)
-const agentTash = Config.agent(tashName)
-const instanceAlice = Config.instance(agentAlice, dna)
-const instanceTash = Config.instance(agentTash, dna)
+// closure to keep config-only stuff out of test scope
+const container = (() => {
 
-const config = Config.container([instanceAlice, instanceTash])
+  const agentAlice = Config.agent(aliceName)
 
-const container = new Container(config)
+  const dna = Config.dna(dnaPath)
+
+  const instanceAlice = Config.instance(agentAlice, dna)
+
+  const containerConfig = Config.container([instanceAlice])
+  return new Container(containerConfig)
+})()
 
 container.start()
 
-const aliceInstanceId = aliceName + '::' + dnaPath
-const tashInstanceId = tashName + '::' + dnaPath
-
+const alice = container.makeCaller(aliceName, dnaPath)
 
 test('create an article', (t) => {
   t.plan(2)
@@ -39,7 +40,7 @@ test('create an article', (t) => {
     "success": true
   }
 
-  const result = container.call(aliceInstanceId, "articles", "main", "create_article", input)
+  const result = alice.call(aliceInstanceId, "articles", "main", "create_article", input)
 
   console.log(result);
 
