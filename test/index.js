@@ -1,16 +1,33 @@
 // This test file uses the tape testing framework.
 // To learn more, go here: https://github.com/substack/tape
 const test = require('tape')
-const Container = require('@holochain/holochain-nodejs')
 
-dnaPath = "dist/bundle.json"
+const { Config, Container } = require('@holochain/holochain-nodejs')
 
-const container = Container.loadAndInstantiate(dnaPath)
+const dnaPath = "./dist/bundle.json"
+
+const aliceName = "alice"
+
+// closure to keep config-only stuff out of test scope
+const container = (() => {
+
+  const agentAlice = Config.agent(aliceName)
+
+  const dna = Config.dna(dnaPath)
+
+  const instanceAlice = Config.instance(agentAlice, dna)
+
+  const containerConfig = Config.container([instanceAlice])
+  return new Container(containerConfig)
+})()
 
 container.start()
 
+const alice = container.makeCaller(aliceName, dnaPath)
+
 test('create an article', (t) => {
   t.plan(2)
+
   const input = {
     article: {
       title: "Article Title",
@@ -23,7 +40,8 @@ test('create an article', (t) => {
     "success": true
   }
 
-  const result = container.call("articles", "main", "create_article", input)
+  const result = alice.call(aliceInstanceId, "articles", "main", "create_article", input)
+
   console.log(result);
 
   t.deepEqual(result.success, expect.success)
@@ -32,22 +50,5 @@ test('create an article', (t) => {
   t.end()
 })
 
-test('get article', (t) => {
-  t.plan(1)
-  const input = {
-    article_addr: "QmWGENspZamWiJMXsYX7ChMTTtbHSP3aUFHcJSibioqKxE"
-  }
-
-  const expect = {
-    title: "Article Title",
-    abst: "abstract text",
-    body: "body of article"
-  }
-
-  const result = container.call("articles", "main", "get_article", input)
-  console.log(result);
-
-  t.deepEqual(result, expect)
-
-  t.end()
-})
+// stop all running instances
+container.stop()
