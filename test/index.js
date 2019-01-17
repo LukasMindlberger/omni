@@ -29,11 +29,9 @@ test('create an article', (t) => {
   t.plan(2)
 
   const input = {
-    article: {
-      title: "Article Title",
-      abst: "abstract text",
-      body: "body of article"
-    }
+    title: "Article Title",
+    abst: "abstract text",
+    body: "body of article"
   }
 
   const expect = {

@@ -3,7 +3,6 @@ use hdk::{
         entry::Entry,
         error::HolochainError,
         json::JsonString,
-        entry::entry_type::EntryType,
         hash::HashString,
     }
 };
@@ -16,9 +15,19 @@ pub struct Article {
     body: String,
 }
 
+impl Article {
+    pub fn new(title: &str, abst: &str, body: &str) -> Article {
+        Article {
+            title: title.to_owned(),
+            abst: abst.to_owned(),
+            body: body.to_owned()
+        }
+    }
+}
+
 // CRUD for zome
-pub fn handle_create_article(article: Article) -> JsonString  {
-    let article_entry = Entry::new(EntryType::App("article".into()), article);
+pub fn handle_create_article(title: String, abst: String, body: String) -> JsonString  {
+    let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
 
     match hdk::commit_entry(&article_entry) {
         Ok(article_addr) => json!({"success": true, "address": article_addr}).into(),
@@ -27,8 +36,8 @@ pub fn handle_create_article(article: Article) -> JsonString  {
 }
 
 pub fn handle_get_article(article_addr: HashString) -> JsonString {
-    match hdk::get_entry(article_addr) {
-        Ok(Some(entry)) => entry.value().to_owned(),
+    match hdk::get_entry(&article_addr) {
+        Ok(Some(entry)) => entry.into(),
         Ok(None) => {}.into(),
         Err(hdk_err) => hdk_err.into()
     }

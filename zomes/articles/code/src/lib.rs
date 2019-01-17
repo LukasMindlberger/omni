@@ -5,6 +5,7 @@ extern crate hdk;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
+#[macro_use]
 extern crate serde_json;
 #[macro_use]
 extern crate holochain_core_types_derive;
@@ -15,7 +16,8 @@ use self::article::Article;
 use hdk::{
     holochain_core_types::{
         hash::HashString,
-        dna::zome::entry_types::Sharing,
+        dna::entry_types::Sharing,
+        json::JsonString,
     },
 };
 
@@ -42,7 +44,7 @@ define_zome! {
     functions: {
         main (Public) {
             create_article: {
-                inputs: |article: Article|,
+                inputs: |title: String, abst: String, body: String|,
                 outputs: |result: JsonString|,
                 handler: article::handle_create_article
             }
