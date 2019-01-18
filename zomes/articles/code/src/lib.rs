@@ -14,12 +14,10 @@ pub mod article;
 use article::Article;
 
 use hdk::{
-    error::ZomeApiResult,
     holochain_core_types::
     {
         cas::content::Address,
         dna::entry_types::Sharing,
-        entry::Entry,
         json::JsonString,
     }
 };

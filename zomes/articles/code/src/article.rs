@@ -1,5 +1,4 @@
 use hdk::{
-    error::ZomeApiResult,
     holochain_core_types::{
         entry::Entry,
         error::HolochainError,
@@ -51,7 +50,7 @@ pub fn create_article(title: String, abst: String, body: String) -> JsonString  
 pub fn get_article(article_addr: Address) -> JsonString {
     match hdk::get_entry(&article_addr) {
         Ok(Some(entry)) => json!({"success": true, "entry": entry}).into(),
-        Ok(None) => json!({"success": true, "entry": {}}).into(),
+        Ok(None) => json!({"success": false, "entry": {}}).into(),
         Err(hdk_err) => hdk_err.into()
     }
 }
@@ -67,7 +66,7 @@ pub fn update_article(article_addr: Address, title: String, abst: String, body: 
 
 pub fn delete_article(article_addr: Address) -> JsonString {
     match hdk::remove_entry(&article_addr) {
-        Ok(_) => json!({ "success": true }).into(),
+        Ok(_) => json!({"success": true}).into(),
         Err(hdk_err) => hdk_err.into()
     }
 }
