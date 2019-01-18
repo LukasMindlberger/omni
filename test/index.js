@@ -25,13 +25,19 @@ container.start()
 
 const alice = container.makeCaller(aliceName, dnaPath)
 
-test('agentId', (t) => {
+
+// Tests
+test('has agentId', (t) => {
   t.plan(1)
+
+  console.log(alice.agentId);
+
   t.ok(alice.agentId)
 })
 
+
 test('create an article', (t) => {
-  t.plan(2)
+  t.plan(1)
 
   const input = {
     title: "Article Title",
@@ -39,16 +45,51 @@ test('create an article', (t) => {
     body: "body of article"
   }
 
-  const expect = {
-    "success": true
-  }
-
   const result = alice.call("articles", "main", "create_article", input)
 
   console.log(result);
 
-  t.deepEqual(result.success, expect.success)
-  t.deepEqual(result.address.length, 46)
+  t.deepEqual(result.Ok.length, 46)
+
+  t.end()
+})
+
+
+test('get article', (t) => {
+  t.plan(1)
+
+  const input = {
+    article_addr: 'QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc'
+  }
+
+  const expect = JSON.stringify({
+    title: "Article Title",
+    abst: "abstract text",
+    body: "body of article"
+  })
+
+  const result = alice.call("articles", "main", "get_article", input)
+
+  console.log(result)
+
+  if (result.Err) {
+    t.notOk(result.Err)
+  } else {
+    t.deepEqual(result.Ok.App[1], expect)
+  }
+})
+
+
+test('delete article', (t) => {
+  const input = {
+    article_addr: 'QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc'
+  }
+
+  const result = alice.call("articles", "main", "delete_article", input)
+
+  console.log(result);
+
+  t.equal(result.Ok, null)
 
   t.end()
 })
