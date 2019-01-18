@@ -1,91 +1,95 @@
 // This test file uses the tape testing framework.
 // To learn more, go here: https://github.com/substack/tape
-const test = require('tape');
-const Container = require('@holochain/holochain-nodejs');
-// const { Config, Container } = require('@holochain/holochain-nodejs');
+const test = require('tape')
 
-const dnaPath = "dist/bundle.json"
+const { Config, Container } = require('@holochain/holochain-nodejs')
 
-// Multi-agent container scenario testing (waiting for container version 0.3.0)
-/*
-const multi_container = (function() {
-  const agentMarcus = Config.agent("marcus")
-  const agentCameron = Config.agent("cameron")
+const dnaPath = "./dist/bundle.json"
+
+const aliceName = "alice"
+
+// closure to keep config-only stuff out of test scope
+const container = (() => {
+
+  const agentAlice = Config.agent(aliceName)
 
   const dna = Config.dna(dnaPath)
 
-  const instanceMarcus = Config.instance(agentMarcus, dna)
-  const instanceCameron = Config.instance(agentCameron, dna)
+  const instanceAlice = Config.instance(agentAlice, dna)
 
-  const containerConfig = Config.container([instanceMarcus, instanceCameron])
+  const containerConfig = Config.container([instanceAlice])
   return new Container(containerConfig)
-}());
-
-activate container instance
-multi_container.start()
-
-const marcus = multi_container.makeCaller('marcus', dnaPath)
-const cameron = multi_container.makeCaller('cameron', dnaPath)
-*/
-
-// Basic container scenario testing
-const container = Container.loadAndInstantiate(dnaPath)
+})()
 
 container.start()
 
+const alice = container.makeCaller(aliceName, dnaPath)
 
-// Non-agent tests
-test('create an article', (t) => {
-  t.plan(2)
-  const input = {
-    article: {
-      title: "Article Title",
-      abst: "abstract text",
-      body: "body of article"
-    }
-  }
 
-  const expect = {
-    "success": true
-  }
+// Tests
+test('has agentId', (t) => {
+  t.plan(1)
 
-  const result = container.call("articles", "main", "create_article", input)
-  console.log(result);
+  console.log(alice.agentId);
 
-  t.deepEqual(result.success, expect.success)
-  t.deepEqual(result.address.length, 46)
-
-  t.end()
+  t.ok(alice.agentId)
 })
 
-test('get article', (t) => {
-  t.plan(1)
-  const input = {
-    article_addr: "QmWGENspZamWiJMXsYX7ChMTTtbHSP3aUFHcJSibioqKxE"
-  }
 
-  const expect = {
+test('create an article', (t) => {
+  t.plan(1)
+
+  const input = {
     title: "Article Title",
     abst: "abstract text",
     body: "body of article"
   }
 
-  const result = container.call("articles", "main", "get_article", input)
+  const result = alice.call("articles", "main", "create_article", input)
+
   console.log(result);
 
-  t.deepEqual(result, expect)
+  t.deepEqual(result.Ok.length, 46)
 
   t.end()
 })
 
 
-// Multi-agent tests
-/*
-test('agentId', (t) => {
-  t.plan(2)
+test('get article', (t) => {
+  t.plan(1)
 
-  t.ok(marcus.agentId)
+  const input = {
+    article_addr: 'QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc'
+  }
 
-  t.notEqual(marcus.agentId, cameron.agentId)
+  const expect = JSON.stringify({
+    title: "Article Title",
+    abst: "abstract text",
+    body: "body of article"
+  })
+
+  const result = alice.call("articles", "main", "get_article", input)
+
+  console.log(result)
+
+  if (result.Err) {
+    t.notOk(result.Err)
+  } else {
+    t.deepEqual(result.Ok.App[1], expect)
+  }
 })
-*/
+
+
+test('delete article', (t) => {
+  const input = {
+    article_addr: 'QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc'
+  }
+
+  const result = alice.call("articles", "main", "delete_article", input)
+
+  console.log(result);
+
+  t.equal(result.Ok, null)
+
+  t.end()
+})

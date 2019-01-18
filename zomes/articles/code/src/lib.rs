@@ -2,21 +2,23 @@
 
 #[macro_use]
 extern crate hdk;
+extern crate serde;
 #[macro_use]
 extern crate serde_derive;
 #[macro_use]
 extern crate holochain_core_types_derive;
-#[macro_use]
-extern crate serde_json;
 
 pub mod article;
 use self::article::Article;
 
 use hdk::{
-    holochain_core_types::{
-        hash::HashString,
-        dna::zome::entry_types::Sharing,
-    },
+    error::ZomeApiResult,
+    holochain_core_types::
+    {
+        cas::content::Address,
+        dna::entry_types::Sharing,
+        entry::Entry,
+    }
 };
 
 
@@ -42,25 +44,25 @@ define_zome! {
     functions: {
         main (Public) {
             create_article: {
-                inputs: |article: Article|,
-                outputs: |result: JsonString|,
-                handler: article::handle_create_article
+                inputs: |title: String, abst: String, body: String|,
+                outputs: |result: ZomeApiResult<Address>|,
+                handler: article::create_article
             }
             get_article: {
-                inputs: |article_addr: HashString|,
-                outputs: |result: JsonString|,
-                handler: article::handle_get_article
+                inputs: |article_addr: Address|,
+                outputs: |result: ZomeApiResult<Option<Entry>>|,
+                handler: article::get_article
             }
             // update_article: {
-            //     inputs: |article_addr: HashString, article: Article|,
+            //     inputs: |article_addr: Address, article: Article|,
             //     outputs: |result: JsonString|,
-            //     handler: article::handle_update_article
+            //     handler: article::update_article
             // }
-            // delete_article: {
-            //     inputs: |article_addr: HashString|,
-            //     outputs: |result: JsonString|,
-            //     handler: article::handle_delete_article
-            // }
+            delete_article: {
+                inputs: |article_addr: Address|,
+                outputs: |result: ZomeApiResult<()>|,
+                handler: article::delete_article
+            }
         }
     }
 }
