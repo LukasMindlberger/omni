@@ -25,6 +25,11 @@ container.start()
 
 const alice = container.makeCaller(aliceName, dnaPath)
 
+test('agentId', (t) => {
+  t.plan(1)
+  t.ok(alice.agentId)
+})
+
 test('create an article', (t) => {
   t.plan(2)
 
@@ -38,7 +43,7 @@ test('create an article', (t) => {
     "success": true
   }
 
-  const result = alice.call(aliceInstanceId, "articles", "main", "create_article", input)
+  const result = alice.call("articles", "main", "create_article", input)
 
   console.log(result);
 
@@ -47,6 +52,3 @@ test('create an article', (t) => {
 
   t.end()
 })
-
-// stop all running instances
-container.stop()
