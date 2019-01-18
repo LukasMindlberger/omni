@@ -62,11 +62,11 @@ test('get article', (t) => {
     article_addr: 'QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc'
   }
 
-  const expect = JSON.stringify({
+  const expect = {
     title: "Article Title",
     abst: "abstract text",
     body: "body of article"
-  })
+  }
 
   const result = alice.call("articles", "main", "get_article", input)
 
@@ -75,8 +75,46 @@ test('get article', (t) => {
   if (result.Err) {
     t.notOk(result.Err)
   } else {
-    t.deepEqual(result.Ok.App[1], expect)
+    t.deepEqual(JSON.parse(result.Ok.App[1]), expect)
   }
+})
+
+
+test('create a new article and then update', (t) => {
+  t.plan(2)
+
+  const input1 = {
+    title: "First Article Title",
+    abst: "first abstract text",
+    body: "first body of article"
+  }
+
+  // Alice creates first article
+  const create = alice.call("articles", "main", "create_article", input1)
+
+  console.log(create);
+
+  t.deepEqual(create.Ok.length, 46)
+
+  const input2 = {
+    address: create.Ok,
+    title: "Second Article Title",
+    abst: "second abstract text",
+    body: "second body of article"
+  }
+
+  // Alice updates first article to second article
+  const result = alice.call("articles", "main", "update_article", input2)
+
+  console.log(result);
+
+  if (result.Ok) {
+    t.notOk(result.Err)
+  } else {
+    t.deepEqual(result.Ok.length, 46)
+  }
+
+  t.end()
 })
 
 

@@ -1,12 +1,12 @@
 use hdk::{
+    error::ZomeApiResult,
     holochain_core_types::{
         entry::Entry,
         error::HolochainError,
         json::JsonString,
         cas::content::Address,
-        },
+        }
     };
-use hdk::error::ZomeApiResult;
 
 // Data structs
 #[derive(Serialize, Deserialize, Debug, DefaultJson)]
@@ -47,6 +47,12 @@ pub fn create_article(title: String, abst: String, body: String) -> ZomeApiResul
 
 pub fn get_article(article_addr: Address) -> ZomeApiResult<Option<Entry>> {
     hdk::get_entry(&article_addr)
+}
+
+pub fn update_article(article_addr: Address, title: String, abst: String, body: String) -> ZomeApiResult<Address> {
+    let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
+
+    hdk::update_entry(article_entry, &article_addr)
 }
 
 pub fn delete_article(article_addr: Address) -> ZomeApiResult<()> {
