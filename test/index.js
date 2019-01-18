@@ -21,6 +21,7 @@ const container = (() => {
   const instanceCameron = Config.instance(agentCameron, dna)
 
   const containerConfig = Config.container([instanceAlice, instanceCameron])
+
   return new Container(containerConfig)
 })()
 
@@ -38,6 +39,23 @@ test('has agentId', (t) => {
 
   t.ok(alice.agentId)
   t.ok(cameron.agentId)
+})
+
+test('alice send message to cameron', (t) => {
+  t.plan(1)
+
+  const input = {
+    to_agent: cameron.agentId,
+    message: "Hi Cameron, I'm Alice"
+  }
+
+  const result = alice.call("messages", "main", "send_message", input)
+
+  // console.log(result);
+
+  t.ok(result.success)
+
+  t.end()
 })
 
 test('create an article', (t) => {
