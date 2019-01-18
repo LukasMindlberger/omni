@@ -53,11 +53,11 @@ define_zome! {
                 outputs: |result: ZomeApiResult<Option<Entry>>|,
                 handler: article::get_article
             }
-            // update_article: {
-            //     inputs: |article_addr: Address, article: Article|,
-            //     outputs: |result: JsonString|,
-            //     handler: article::update_article
-            // }
+            update_article: {
+                inputs: |article_addr: Address, title: String, abst: String, body: String|,
+                outputs: |result: ZomeApiResult<Address>|,
+                handler: article::update_article
+            }
             delete_article: {
                 inputs: |article_addr: Address|,
                 outputs: |result: ZomeApiResult<()>|,
