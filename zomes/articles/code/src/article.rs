@@ -39,22 +39,35 @@ impl Article {
 }
 
 // CRUD for zome
-pub fn create_article(title: String, abst: String, body: String) -> ZomeApiResult<Address>  {
+pub fn create_article(title: String, abst: String, body: String) -> JsonString  {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
 
-    hdk::commit_entry(&article_entry)
+    match hdk::commit_entry(&article_entry) {
+        Ok(address) => json!({"success": true, "address": address}).into(),
+        Err(hdk_err) => hdk_err.into()
+    }
 }
 
-pub fn get_article(article_addr: Address) -> ZomeApiResult<Option<Entry>> {
-    hdk::get_entry(&article_addr)
+pub fn get_article(article_addr: Address) -> JsonString {
+    match hdk::get_entry(&article_addr) {
+        Ok(Some(entry)) => json!({"success": true, "entry": entry}).into(),
+        Ok(None) => json!({"success": true, "entry": {}}).into(),
+        Err(hdk_err) => hdk_err.into()
+    }
 }
 
-pub fn update_article(article_addr: Address, title: String, abst: String, body: String) -> ZomeApiResult<Address> {
+pub fn update_article(article_addr: Address, title: String, abst: String, body: String) -> JsonString {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
 
-    hdk::update_entry(article_entry, &article_addr)
+    match hdk::update_entry(article_entry, &article_addr) {
+        Ok(address) => json!({"success": true, "address": address}).into(),
+        Err(hdk_err) => hdk_err.into()
+    }
 }
 
-pub fn delete_article(article_addr: Address) -> ZomeApiResult<()> {
-    hdk::remove_entry(&article_addr)
+pub fn delete_article(article_addr: Address) -> JsonString {
+    match hdk::remove_entry(&article_addr) {
+        Ok(_) => json!({ "success": true }).into(),
+        Err(hdk_err) => hdk_err.into()
+    }
 }

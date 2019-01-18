@@ -2,6 +2,8 @@
 
 #[macro_use]
 extern crate hdk;
+#[macro_use]
+extern crate serde_json;
 extern crate serde;
 #[macro_use]
 extern crate serde_derive;
@@ -18,6 +20,7 @@ use hdk::{
         cas::content::Address,
         dna::entry_types::Sharing,
         entry::Entry,
+        json::JsonString,
     }
 };
 
@@ -45,22 +48,22 @@ define_zome! {
         main (Public) {
             create_article: {
                 inputs: |title: String, abst: String, body: String|,
-                outputs: |result: ZomeApiResult<Address>|,
+                outputs: |result: JsonString|,
                 handler: article::create_article
             }
             get_article: {
                 inputs: |article_addr: Address|,
-                outputs: |result: ZomeApiResult<Option<Entry>>|,
+                outputs: |result: JsonString|,
                 handler: article::get_article
             }
             update_article: {
                 inputs: |article_addr: Address, title: String, abst: String, body: String|,
-                outputs: |result: ZomeApiResult<Address>|,
+                outputs: |result: JsonString|,
                 handler: article::update_article
             }
             delete_article: {
                 inputs: |article_addr: Address|,
-                outputs: |result: ZomeApiResult<()>|,
+                outputs: |result: JsonString|,
                 handler: article::delete_article
             }
         }

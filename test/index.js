@@ -37,7 +37,7 @@ test('has agentId', (t) => {
 
 
 test('create an article', (t) => {
-  t.plan(1)
+  t.plan(2)
 
   const input = {
     title: "Article Title",
@@ -49,17 +49,17 @@ test('create an article', (t) => {
 
   console.log(result);
 
-  t.deepEqual(result.Ok.length, 46)
+  t.ok(result.success)
+  t.deepEqual(result.address.length, 46)
 
   t.end()
 })
 
-
-test('get article', (t) => {
-  t.plan(1)
+test('get the article', (t) => {
+  t.plan(2)
 
   const input = {
-    article_addr: 'QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc'
+    article_addr: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
   }
 
   const expect = {
@@ -70,64 +70,64 @@ test('get article', (t) => {
 
   const result = alice.call("articles", "main", "get_article", input)
 
-  console.log(result)
-
-  if (result.Err) {
-    t.notOk(result.Err)
-  } else {
-    t.deepEqual(JSON.parse(result.Ok.App[1]), expect)
-  }
-})
-
-
-test('create a new article and then update', (t) => {
-  t.plan(2)
-
-  const input1 = {
-    title: "First Article Title",
-    abst: "first abstract text",
-    body: "first body of article"
-  }
-
-  // Alice creates first article
-  const create = alice.call("articles", "main", "create_article", input1)
-
-  console.log(create);
-
-  t.deepEqual(create.Ok.length, 46)
-
-  const input2 = {
-    address: create.Ok,
-    title: "Second Article Title",
-    abst: "second abstract text",
-    body: "second body of article"
-  }
-
-  // Alice updates first article to second article
-  const result = alice.call("articles", "main", "update_article", input2)
-
   console.log(result);
 
-  if (result.Ok) {
-    t.notOk(result.Err)
-  } else {
-    t.deepEqual(result.Ok.length, 46)
-  }
+  t.ok(result.success)
+  t.deepEqual(JSON.parse(result.entry.App[1]), expect)
 
   t.end()
 })
 
+test('delete the article', (t) => {
+  t.plan(2)
 
-test('delete article', (t) => {
   const input = {
-    article_addr: 'QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc'
+    article_addr: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
+  }
+
+  const expect = {
+    success: true
   }
 
   const result = alice.call("articles", "main", "delete_article", input)
 
   console.log(result);
 
-  t.equal(result.Ok, null)
+  t.ok(result.success)
+  t.deepEqual(result.success, expect.success)
+
+  t.end()
+})
+
+test('create an article and then update it', (t) => {
+  t.plan(4)
+
+  const create_input = {
+    title: "1 Article Title",
+    abst: "1 abstract text",
+    body: "1 body of article"
+  }
+
+  const create_result = alice.call("articles", "main", "create_article", create_input)
+
+  console.log(create_result)
+
+  t.ok(create_result.success)
+  t.deepEqual(create_result.address.length, 46)
+
+  const update_input = {
+    article_addr: create_result.address,
+    title: "2 Article Title",
+    abst: "2 abstract text",
+    body: "2 body of article"
+  }
+
+  const update_result = alice.call("articles", "main", "update_article", update_input)
+
+  console.log(update_result);
+
+  t.ok(update_result.success)
+  t.deepEqual(update_result.address.length, 46)
 
   t.end()
 })
