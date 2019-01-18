@@ -9,7 +9,7 @@ extern crate serde_derive;
 extern crate holochain_core_types_derive;
 
 pub mod article;
-use self::article::Article;
+use article::Article;
 
 use hdk::{
     error::ZomeApiResult,

@@ -1,12 +1,12 @@
 use hdk::{
+    error::ZomeApiResult,
     holochain_core_types::{
         entry::Entry,
         error::HolochainError,
         json::JsonString,
         cas::content::Address,
-        },
+        }
     };
-use hdk::error::ZomeApiResult;
 
 // Data structs
 #[derive(Serialize, Deserialize, Debug, DefaultJson)]
