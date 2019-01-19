@@ -1,3 +1,4 @@
+// Article zome
 #![feature(try_from)]
 
 #[macro_use]
@@ -32,11 +33,23 @@ define_zome! {
         sharing: Sharing::Public,
         native_type: Article,
         validation_package: || {
-            hdk::ValidationPackageDefinition::Entry
+            hdk::ValidationPackageDefinition::ChainFull
         },
         validation: |article: Article, _ctx: hdk::ValidationData| {
             Ok(())
-        }
+        },
+        links: [
+            from!(
+                "%agent_id",
+                tag: "authored_article",
+                validation_package: || {
+                    hdk::ValidationPackageDefinition::ChainFull
+                },
+                validation: |_source: Address, _target: Address, _ctx: hdk::ValidationData | {
+                    Ok(())
+                }
+            )
+        ]
     )
     ]
 
@@ -63,6 +76,11 @@ define_zome! {
                 inputs: |article_addr: Address|,
                 outputs: |result: JsonString|,
                 handler: article::delete_article
+            }
+            get_authored_articles: {
+                inputs: |agent_addr: Address|,
+                outputs: |result: JsonString|,
+                handler: article::get_authored_articles
             }
         }
     }

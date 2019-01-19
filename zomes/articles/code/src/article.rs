@@ -4,8 +4,9 @@ use hdk::{
         error::HolochainError,
         json::JsonString,
         cas::content::Address,
-        }
-    };
+    },
+    AGENT_ADDRESS,
+};
 
 // Data structs
 #[derive(Serialize, Deserialize, Debug, DefaultJson)]
@@ -38,11 +39,17 @@ impl Article {
 }
 
 // CRUD for zome
-pub fn create_article(title: String, abst: String, body: String) -> JsonString  {
+pub fn create_article(title: String, abst: String, body: String) -> JsonString {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
 
-    match hdk::commit_entry(&article_entry) {
-        Ok(address) => json!({"success": true, "address": address}).into(),
+    let article_addr = hdk::commit_entry(&article_entry);
+
+    match article_addr {
+        Ok(address) => {
+            hdk::link_entries(&AGENT_ADDRESS, &address, "authored_article");
+
+            json!({"success": true, "address": address}).into()
+        },
         Err(hdk_err) => hdk_err.into()
     }
 }
@@ -66,7 +73,14 @@ pub fn update_article(article_addr: Address, title: String, abst: String, body: 
 
 pub fn delete_article(article_addr: Address) -> JsonString {
     match hdk::remove_entry(&article_addr) {
-        Ok(_) => json!({"success": true}).into(),
+        Ok(result) => json!({"success": true, "result": result}).into(),
+        Err(hdk_err) => hdk_err.into()
+    }
+}
+
+pub fn get_authored_articles(agent_addr: Address) -> JsonString {
+    match hdk::get_links(&agent_addr, "authored_article") {
+        Ok(links_result) => json!({"success": true, "links_result": links_result}).into(),
         Err(hdk_err) => hdk_err.into()
     }
 }

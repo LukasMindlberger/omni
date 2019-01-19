@@ -1,8 +1,0 @@
-{
-  "name": "middlewares",
-  "version": "0.0.1",
-  "description": "middlewares for omni",
-  "dependencies": {
-    "express": "^4.16.4"
-  }
-}

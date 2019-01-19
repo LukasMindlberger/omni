@@ -69,7 +69,7 @@ test('create an article', (t) => {
 
   const result = alice.call("articles", "main", "create_article", input)
 
-  // console.log(result);
+  console.log(result);
 
   t.ok(result.success)
   t.deepEqual(result.address.length, 46)
@@ -96,6 +96,22 @@ test('get the article', (t) => {
 
   t.ok(result.success)
   t.deepEqual(JSON.parse(result.entry.App[1]), expect)
+
+  t.end()
+})
+
+test('cameron get articles authored by alice', (t) => {
+  t.plan(1)
+
+  const input = {
+   agent_addr: alice.agentId
+  }
+
+  const result = cameron.call("articles", "main", "get_authored_articles", input)
+
+  console.log(result.links_result);
+
+  t.ok(result.success)
 
   t.end()
 })
