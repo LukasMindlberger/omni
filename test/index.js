@@ -1,6 +1,10 @@
 // This test file uses the tape testing framework.
 // To learn more, go here: https://github.com/substack/tape
 const test = require('tape')
+const tapSpec = require('tap-spec');
+test.createStream()
+  .pipe(tapSpec())
+  .pipe(process.stdout);
 
 const { Config, Container } = require('@holochain/holochain-nodejs')
 
@@ -37,8 +41,8 @@ test('has agentId', (t) => {
   console.log(alice.agentId);
   console.log(cameron.agentId);
 
-  t.ok(alice.agentId, "alice has no id")
-  t.ok(cameron.agentId, "cameron has no id")
+  t.ok(alice.agentId, "alice should have id")
+  t.ok(cameron.agentId, "cameron should have id")
 })
 
 test('alice send message to cameron', (t) => {
@@ -53,7 +57,7 @@ test('alice send message to cameron', (t) => {
 
   console.log(result);
 
-  t.ok(result.success, "Message couldn't be delivered")
+  t.ok(result.success, "Message should reach destination if both agents online")
 
   t.end()
 })
@@ -71,8 +75,8 @@ test('create an article', (t) => {
 
   console.log(result);
 
-  t.ok(result.Ok, "Article not created")
-  t.deepEqual(result.Ok.length, 46, "Returned entry address was not correct length")
+  t.ok(result.Ok, "Should be able to create article")
+  t.deepEqual(result.Ok.length, 46, "Address length should be 46 chars")
 
   t.end()
 })
@@ -94,10 +98,28 @@ test('get the article', (t) => {
 
   console.log(result);
 
-  t.ok(result.Ok, "Not valid address")
-  t.deepEqual(JSON.parse(result.Ok.App[1]), expect, "Returned article didn't match expected data")
+  t.ok(result.Ok, "hdk::get_entry should return article content at address for all users")
+  t.deepEqual(JSON.parse(result.Ok.App[1]), expect, "Returned article should match expected data")
 
   t.end()
+})
+
+test('get article address by content', (t) => {
+  t.plan(1)
+
+  const input = {
+    title: "Article Title",
+    abst: "abstract text",
+    body: "body of article"
+  }
+
+  const expect = "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
+
+  const result = alice.call("articles", "main", "article_address", input)
+
+  console.log(result);
+
+  t.deepEqual(result.Ok, expect)
 })
 
 test('cameron get article addresses authored by alice', (t) => {
@@ -111,8 +133,8 @@ test('cameron get article addresses authored by alice', (t) => {
 
   console.log(result);
 
-  t.ok(result.Ok, "hdk::get_links failed")
-  t.ok(result.Ok.addresses[0] != undefined, "No addresses returned")
+  t.ok(result.Ok)
+  t.ok(result.Ok.addresses[0] != undefined, "Should return addresses of live articles Alice has created")
 
   t.end()
 })
@@ -128,7 +150,7 @@ test('delete the article', (t) => {
 
   console.log(result);
 
-  t.ok(result.Ok === null, "Entry couldn't be deleted")
+  t.ok(result.Ok === null, "Alice should be able to delete her article")
 
   t.end()
 })
@@ -144,7 +166,7 @@ test('fail to get deleted article', (t) => {
 
   console.log(result);
 
-  t.ok(result.Ok === null, "No content was returned")
+  t.ok(result.Ok === null, "Should return null")
 
   t.end()
 })
@@ -205,14 +227,14 @@ test('alice create article, cameron get it', (t) => {
 
   console.log(get_result);
 
-  t.ok(get_result.Ok, "Not valid address")
-  t.deepEqual(JSON.parse(get_result.Ok.App[1]), create_input, "Returned article didn't match expected data")
+  t.ok(get_result.Ok, "Cameron should be able to get Alice's article")
+  t.deepEqual(JSON.parse(get_result.Ok.App[1]), create_input, "Returned article should match article Alice just made in this test")
 
   t.end()
 })
 
 test('alice create article, cameron fail to delete it', (t) => {
-  t.plan(2)
+  t.plan(3)
 
   const create_input = {
     title: "4 Article Title",
@@ -234,7 +256,8 @@ test('alice create article, cameron fail to delete it', (t) => {
 
   console.log(delete_result);
 
-  t.notOk(delete_result.Ok === null, "Cameron was able to delete Alice's article!")
+  t.notOk(delete_result.Err != undefined, "Shouldn't return Err")
+  t.notOk(delete_result.Ok === null, "Cameron shouldn't be able to delete Alice's article")
 
   t.end()
 })
