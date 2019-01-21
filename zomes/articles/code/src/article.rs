@@ -1,12 +1,13 @@
 use hdk::{
+    error::ZomeApiResult,
     holochain_core_types::{
         entry::Entry,
         error::HolochainError,
-        json::JsonString,
         cas::content::Address,
+        json::JsonString
     },
-    AGENT_ADDRESS,
 };
+use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
 
 // Data structs
 #[derive(Serialize, Deserialize, Debug, DefaultJson)]
@@ -39,48 +40,32 @@ impl Article {
 }
 
 // CRUD for zome
-pub fn create_article(title: String, abst: String, body: String) -> JsonString {
+pub fn create_article(title: String, abst: String, body: String) -> ZomeApiResult<Address> {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
 
-    let article_addr = hdk::commit_entry(&article_entry);
-
-    match article_addr {
-        Ok(address) => {
-            hdk::link_entries(&AGENT_ADDRESS, &address, "authored_article");
-
-            json!({"success": true, "address": address}).into()
-        },
-        Err(hdk_err) => hdk_err.into()
-    }
+    hdk::commit_entry(&article_entry)
 }
 
-pub fn get_article(article_addr: Address) -> JsonString {
-    match hdk::get_entry(&article_addr) {
-        Ok(Some(entry)) => json!({"success": true, "entry": entry}).into(),
-        Ok(None) => json!({"success": false, "entry": {}}).into(),
-        Err(hdk_err) => hdk_err.into()
-    }
+pub fn get_article(article_addr: Address) -> ZomeApiResult<Option<Entry>> {
+    hdk::get_entry(&article_addr)
 }
 
-pub fn update_article(article_addr: Address, title: String, abst: String, body: String) -> JsonString {
+pub fn update_article(article_addr: Address, title: String, abst: String, body: String) -> ZomeApiResult<Address> {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
 
-    match hdk::update_entry(article_entry, &article_addr) {
-        Ok(address) => json!({"success": true, "address": address}).into(),
-        Err(hdk_err) => hdk_err.into()
-    }
+    hdk::update_entry(article_entry, &article_addr)
 }
 
-pub fn delete_article(article_addr: Address) -> JsonString {
-    match hdk::remove_entry(&article_addr) {
-        Ok(result) => json!({"success": true, "result": result}).into(),
-        Err(hdk_err) => hdk_err.into()
-    }
+pub fn delete_article(article_addr: Address) -> ZomeApiResult<()> {
+    hdk::remove_entry(&article_addr)
 }
 
-pub fn get_authored_articles(agent_addr: Address) -> JsonString {
-    match hdk::get_links(&agent_addr, "authored_article") {
-        Ok(links_result) => json!({"success": true, "links_result": links_result}).into(),
-        Err(hdk_err) => hdk_err.into()
-    }
+pub fn article_address(title: String, abst: String, body: String) -> ZomeApiResult<Address> {
+    let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
+
+    hdk::entry_address(&article_entry)
+}
+
+pub fn get_authored_articles(agent_addr: Address) -> ZomeApiResult<GetLinksResult> {
+    hdk::get_links(&agent_addr, "authored_article")
 }

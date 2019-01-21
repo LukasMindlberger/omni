@@ -3,7 +3,6 @@
 
 #[macro_use]
 extern crate hdk;
-#[macro_use]
 extern crate serde_json;
 extern crate serde;
 #[macro_use]
@@ -15,14 +14,15 @@ pub mod article;
 use article::Article;
 
 use hdk::{
+    error::ZomeApiResult,
     holochain_core_types::
     {
         cas::content::Address,
         dna::entry_types::Sharing,
-        json::JsonString,
+        entry::Entry,
     }
 };
-
+use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
 
 // Validation logic & links
 define_zome! {
@@ -57,29 +57,34 @@ define_zome! {
 
     functions: {
         main (Public) {
+            article_address: {
+                inputs: |title: String, abst: String, body: String|,
+                outputs: |article: ZomeApiResult<Address>|,
+                handler: article::article_address
+            }
             create_article: {
                 inputs: |title: String, abst: String, body: String|,
-                outputs: |result: JsonString|,
+                outputs: |result: ZomeApiResult<Address>|,
                 handler: article::create_article
             }
             get_article: {
                 inputs: |article_addr: Address|,
-                outputs: |result: JsonString|,
+                outputs: |result: ZomeApiResult<Option<Entry>>|,
                 handler: article::get_article
             }
             update_article: {
                 inputs: |article_addr: Address, title: String, abst: String, body: String|,
-                outputs: |result: JsonString|,
+                outputs: |result: ZomeApiResult<Address>|,
                 handler: article::update_article
             }
             delete_article: {
                 inputs: |article_addr: Address|,
-                outputs: |result: JsonString|,
+                outputs: |result: ZomeApiResult<()>|,
                 handler: article::delete_article
             }
             get_authored_articles: {
                 inputs: |agent_addr: Address|,
-                outputs: |result: JsonString|,
+                outputs: |result: ZomeApiResult<GetLinksResult>|,
                 handler: article::get_authored_articles
             }
         }
