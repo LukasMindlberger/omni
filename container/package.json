@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@holochain/holochain-nodejs": "0.3.0"
+  }
+}
