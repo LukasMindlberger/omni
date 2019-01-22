@@ -16,8 +16,7 @@ use article::Article;
 use boolinator::Boolinator;
 use hdk::{
     error::ZomeApiResult,
-    holochain_core_types::
-    {
+    holochain_core_types::{
         cas::content::Address,
         dna::entry_types::Sharing,
         entry::Entry,
@@ -41,9 +40,10 @@ define_zome! {
         validation_package: || {
             hdk::ValidationPackageDefinition::ChainFull
         },
-        validation: |article: Article, _ctx: hdk::ValidationData| {
-            ((article.title().len() < 300) & (article.abst().len() < 500))
-                .ok_or_else(|| String::from("Article struct is invalid"))
+        validation: |article: Article, _ctx: hdk::ValidationData| {(
+                (article.title().len() < 300) & (article.abst().len() < 500)
+            )
+            .ok_or_else(|| String::from("Article struct is invalid"))
         },
         links: [
             from!(
@@ -67,12 +67,12 @@ define_zome! {
             get_sources_latest: {
                 inputs: |address: Address|,
                 outputs: |result: ZomeApiResult<GetEntryResult>|,
-                handler: get_sources_latest_handler
+                handler: handle_get_sources_latest
             }
             get_sources_initial: {
                 inputs: |address: Address|,
                 outputs: |result: ZomeApiResult<GetEntryResult>|,
-                handler: get_sources_initial_handler
+                handler: handle_get_sources_initial
             }
             article_address: {
                 inputs: |title: String, abst: String, body: String|,
@@ -108,13 +108,13 @@ define_zome! {
     }
 }
 
-fn get_sources_latest_handler(address: Address) -> ZomeApiResult<GetEntryResult> {
+fn handle_get_sources_latest(address: Address) -> ZomeApiResult<GetEntryResult> {
     let options = GetEntryOptions::new(StatusRequestKind::Latest, false, false, true);
 
     hdk::get_entry_result(&address, options)
 }
 
-fn get_sources_initial_handler(address: Address) -> ZomeApiResult<GetEntryResult> {
+fn handle_get_sources_initial(address: Address) -> ZomeApiResult<GetEntryResult> {
     let options = GetEntryOptions::new(StatusRequestKind::Initial, false, false, true);
 
     hdk::get_entry_result(&address, options)

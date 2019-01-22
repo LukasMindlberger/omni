@@ -269,32 +269,38 @@ test('create article exceeding valid title length', (t) => {
   t.end()
 })
 
-// test('alice create article, cameron fail to delete it', (t) => {
-//   const create_input = {
-//     title: "4 Article Title",
-//     abst: "4 abstract text",
-//     body: "4 body of article"
-//   }
-//
-//   const create_response = alice.call("articles", "main", "create_article", create_input)
-//
-//  console.log(create_response)
-//
-//   t.ok(create_response.Ok, "Alice should create an article")
-//
-//   const delete_input = {
-//     article_addr: create_response.Ok
-//   }
-//
-//   const delete_response = cameron.call("articles", "main", "delete_article", delete_input)
-//
-//  console.log(delete_response);
-//
-//   if (delete_response.hasOwnProperty('Ok')) {
-//     t.notOk(delete_response.Ok === null, "Cameron shouldn't be able to delete Alice's article")
-//   } else {
-//     t.notOk(delete_response.Err, "Deletion threw error: "+JSON.stringify(delete_response.Err))
-//   }
-// })
+test('alice create article, cameron fail to delete it', (t) => {
+  const create_input = {
+    title: "4 Article Title",
+    abst: "4 abstract text",
+    body: "4 body of article"
+  }
+
+  const create_response = alice.call("articles", "main", "create_article", create_input)
+
+ console.log(create_response)
+
+  t.ok(create_response.Ok, "Alice should create an article")
+
+  const delete_input = {
+    article_addr: create_response.Ok
+  }
+
+  const delete_response = cameron.call("articles", "main", "delete_article", delete_input)
+
+ console.log(delete_response);
+
+ if (delete_response.hasOwnProperty('Err')) {
+   if (delete_response.Err.hasOwnProperty('Internal')) {
+     const error = JSON.parse(delete_response.Err.Internal).kind
+
+     console.log(error);
+   }
+ } else if (delete_response.hasOwnProperty('Ok')) {
+   t.notOk(delete_response.Ok === null, "Cameron shouldn't be able to delete Alice's article")
+ }
+
+ t.end()
+})
 
 // container.stop()
