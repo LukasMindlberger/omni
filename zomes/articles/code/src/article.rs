@@ -9,7 +9,6 @@ use hdk::{
 };
 use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
 
-// Data structs
 #[derive(Serialize, Deserialize, Debug, DefaultJson)]
 pub struct Article {
     title: String,
@@ -39,10 +38,8 @@ impl Article {
     }
 }
 
-// CRUD for zome
 pub fn create_article(title: String, abst: String, body: String) -> ZomeApiResult<Address> {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
-
     hdk::commit_entry(&article_entry)
 }
 
@@ -52,7 +49,6 @@ pub fn get_article(article_addr: Address) -> ZomeApiResult<Option<Entry>> {
 
 pub fn update_article(article_addr: Address, title: String, abst: String, body: String) -> ZomeApiResult<Address> {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
-
     hdk::update_entry(article_entry, &article_addr)
 }
 
@@ -62,7 +58,6 @@ pub fn delete_article(article_addr: Address) -> ZomeApiResult<()> {
 
 pub fn article_address(title: String, abst: String, body: String) -> ZomeApiResult<Address> {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
-
     hdk::entry_address(&article_entry)
 }
 

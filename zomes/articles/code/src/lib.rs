@@ -13,6 +13,7 @@ extern crate holochain_core_types_derive;
 pub mod article;
 use article::Article;
 
+use boolinator::Boolinator;
 use hdk::{
     error::ZomeApiResult,
     holochain_core_types::
@@ -22,7 +23,12 @@ use hdk::{
         entry::Entry,
     }
 };
-use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
+use holochain_wasm_utils::api_serialization::{
+    get_links::GetLinksResult,
+    get_entry::{
+        GetEntryResult, GetEntryOptions, StatusRequestKind
+    },
+};
 
 // Validation logic & links
 define_zome! {
@@ -36,7 +42,8 @@ define_zome! {
             hdk::ValidationPackageDefinition::ChainFull
         },
         validation: |article: Article, _ctx: hdk::ValidationData| {
-            Ok(())
+            ((article.title().len() < 300) & (article.abst().len() < 500))
+                .ok_or_else(|| String::from("Article struct is invalid"))
         },
         links: [
             from!(
@@ -57,6 +64,16 @@ define_zome! {
 
     functions: {
         main (Public) {
+            get_sources_latest: {
+                inputs: |address: Address|,
+                outputs: |result: ZomeApiResult<GetEntryResult>|,
+                handler: get_sources_latest_handler
+            }
+            get_sources_initial: {
+                inputs: |address: Address|,
+                outputs: |result: ZomeApiResult<GetEntryResult>|,
+                handler: get_sources_initial_handler
+            }
             article_address: {
                 inputs: |title: String, abst: String, body: String|,
                 outputs: |article: ZomeApiResult<Address>|,
@@ -89,4 +106,16 @@ define_zome! {
             }
         }
     }
+}
+
+fn get_sources_latest_handler(address: Address) -> ZomeApiResult<GetEntryResult> {
+    let options = GetEntryOptions::new(StatusRequestKind::Latest, false, false, true);
+
+    hdk::get_entry_result(&address, options)
+}
+
+fn get_sources_initial_handler(address: Address) -> ZomeApiResult<GetEntryResult> {
+    let options = GetEntryOptions::new(StatusRequestKind::Initial, false, false, true);
+
+    hdk::get_entry_result(&address, options)
 }
