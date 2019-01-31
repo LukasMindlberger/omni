@@ -32,13 +32,15 @@ define_zome! {
         format!("Received: {}", payload)
     }
 
-    functions: {
-        main (Public) {
-            send_message: {
-                inputs: |to_agent: Address, message: String|,
-                outputs: |result: JsonString|,
-                handler: handle_send_message
-            }
+    functions: [
+        send_message: {
+            inputs: |to_agent: Address, message: String|,
+            outputs: |result: JsonString|,
+            handler: handle_send_message
         }
+    ]
+
+    capabilities: {
+        public (Public) [send_message]
     }
 }
