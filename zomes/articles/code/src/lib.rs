@@ -86,7 +86,7 @@ define_zome! {
             validation_package: || {
                 hdk::ValidationPackageDefinition::Entry
             },
-            validation: |article: Keyword, _validation_data: hdk::ValidationData| {
+            validation: |_keyword: Keyword, _validation_data: hdk::ValidationData| {
                 Ok(())
             }
         )
@@ -109,7 +109,7 @@ define_zome! {
         // }
 
         create_article: {
-            inputs: |title: String, abst: String, body: String, keywords: Vec<String>|,
+            inputs: |article: Article|,
             outputs: |result: ZomeApiResult<Address>|,
             handler: article::create_article
         }
@@ -121,7 +121,7 @@ define_zome! {
         }
 
         update_article: {
-            inputs: |article_addr: Address, title: String, abst: String, body: String, keywords: Vec<String>|,
+            inputs: |article_addr: Address, article: Article|,
             outputs: |result: ZomeApiResult<Address>|,
             handler: article::update_article
         }
@@ -133,7 +133,7 @@ define_zome! {
         }
 
         article_address: {
-            inputs: |title: String, abst: String, body: String, keywords: Vec<String>|,
+            inputs: |article: Article|,
             outputs: |article: ZomeApiResult<Address>|,
             handler: article::article_address
         }
@@ -145,7 +145,7 @@ define_zome! {
         }
 
         create_keyword: {
-            inputs: |keyword: String|,
+            inputs: |keyword: Keyword|,
             outputs: |result: ZomeApiResult<Address>|,
             handler: keyword::create_keyword
         }

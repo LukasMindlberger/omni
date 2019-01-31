@@ -28,8 +28,8 @@ impl Keyword {
     }
 }
 
-pub fn create_keyword(keyword: String) -> ZomeApiResult<Address> {
-    let keyword_entry = Entry::App("keyword".into(), Keyword::new(&keyword).into());
+pub fn create_keyword(keyword: Keyword) -> ZomeApiResult<Address> {
+    let keyword_entry = Entry::App("keyword".into(), keyword.into());
     hdk::commit_entry(&keyword_entry)
 }
 
