@@ -4,7 +4,7 @@
 
 # The Omni Project
 
-***Omni is the next era of scholarly communications.***
+***Establishing a global scholarly commons***
 
 </br></br></br>
 
