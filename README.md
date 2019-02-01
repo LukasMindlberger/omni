@@ -8,6 +8,11 @@
 
 </br></br></br>
 
+
+### Developers
+
+If you're looking to get involved, check out the [project boards](https://github.com/OmniProject/omni/projects) or talk to other collaborators in our [Holochain Mattermost channel](https://chat.holochain.net/appsup/channels/app-omni).
+
 # Introduction
 
 The Omni Project is helping to bring about the next generation of scholarly communications. The current scholarly publishing system is broken—new knowledge that benefits everyone is locked behind expensive paywalls and certain individuals and companies gain disproportionate levels of power and influence, allowing them to shape the system to work for them and not for the research ecosystem as a whole. More researchers and institutions are willing to fork the bill to allow anyone to read their research, but this can't possibly be sustainable. Simply put, scholars, institutions and commoners **are getting screwed**, and we're only just beginning to wake up to this fact—publishers write the rules of the game.
