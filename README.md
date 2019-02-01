@@ -11,7 +11,7 @@
 
 ### Developers
 
-If you're looking to get involved, check out the [project boards](https://github.com/OmniProject/omni/projects) or talk to other collaborators in our [Holochain Mattermost channel](https://chat.holochain.net/appsup/channels/app-omni).
+If you're looking to contribute, check out the [project boards](https://github.com/OmniProject/omni/projects) or talk to other collaborators in our [Holochain Mattermost channel](https://chat.holochain.net/appsup/channels/app-omni).
 
 # Introduction
 
