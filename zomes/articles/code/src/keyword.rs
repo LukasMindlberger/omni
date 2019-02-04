@@ -17,12 +17,6 @@ pub struct Keyword {
 }
 
 impl Keyword {
-    pub fn new(keyword: &str) -> Keyword {
-        Keyword {
-            keyword: keyword.to_owned()
-        }
-    }
-
     pub fn keyword(&self) -> String {
         self.keyword.clone()
     }

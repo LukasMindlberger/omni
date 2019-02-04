@@ -104,6 +104,7 @@ test('get the article', (t) => {
   t.end()
 })
 
+/*
 test('get article sources', (t) => {
   const input = {
     address: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
@@ -115,27 +116,16 @@ test('get article sources', (t) => {
 
   t.end()
 })
-
-test('get article address by content', (t) => {
-  t.plan(1)
-
-  const input = {
-    title: "Article Title",
-    abst: "abstract text",
-    body: "body of article"
-  }
-
-  const expect = "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
-
-  const response = alice.call("articles", "main", "article_address", input)
-
-  // console.log(response);
-
-  t.deepEqual(response.Ok, expect, "Returned article should match expected data")
-})
+*/
 
 test('cameron get article addresses authored by alice', (t) => {
-  t.plan(2)
+  t.plan(3)
+
+  const link = alice.call("articles", "main", "author_article", "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc")
+
+  console.log(link);
+
+  t.ok(link.Ok, "Alice should be able to become author of her article")
 
   const input = {
    agent_addr: alice.agentId
