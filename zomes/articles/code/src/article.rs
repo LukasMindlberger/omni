@@ -42,7 +42,12 @@ impl Article {
 
 pub fn create_article(title: String, abst: String, body: String) -> ZomeApiResult<Address> {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
-    hdk::commit_entry(&article_entry)
+
+    let article_addr = hdk::commit_entry(&article_entry)?;
+
+    hdk::link_entries(&AGENT_ADDRESS, &article_addr, "articles_from_agent")?;
+
+    Ok(article_addr)
 }
 
 pub fn get_article(article_addr: Address) -> ZomeApiResult<Option<Entry>> {
@@ -51,17 +56,19 @@ pub fn get_article(article_addr: Address) -> ZomeApiResult<Option<Entry>> {
 
 pub fn update_article(article_addr: Address, title: String, abst: String, body: String) -> ZomeApiResult<Address> {
     let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
-    hdk::update_entry(article_entry, &article_addr)
+
+    let new_addr = hdk::update_entry(article_entry, &article_addr)?;
+
+    hdk::link_entries(&AGENT_ADDRESS, &new_addr, "articles_from_agent")?;
+
+    Ok(new_addr)
 }
 
 pub fn delete_article(article_addr: Address) -> ZomeApiResult<()> {
     hdk::remove_entry(&article_addr)
 }
 
-pub fn author_article(article_addr: Address) -> Result<(), ZomeApiError> {
-    hdk::link_entries(&AGENT_ADDRESS, &article_addr, "articles_from_agent")
-}
-
 pub fn get_authored_articles(agent_addr: Address) -> ZomeApiResult<GetLinksResult> {
-    hdk::get_links(&agent_addr, "articles_from_agent")
+    let address = agent_addr.into();
+    hdk::get_links(&address, "articles_from_agent")
 }

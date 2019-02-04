@@ -98,14 +98,15 @@ test('get the article', (t) => {
 
   // console.log(response);
 
-  t.ok(response.Ok, "hdk::get_entry should return article content at address for all users")
+  t.ok(response.Ok, "hdk::get_entry should return article content at address for any user")
   t.deepEqual(JSON.parse(response.Ok.App[1]), expect, "Returned article should match expected data")
 
   t.end()
 })
 
-/*
 test('get article sources', (t) => {
+  t.plan(1)
+
   const input = {
     address: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
   }
@@ -114,18 +115,13 @@ test('get article sources', (t) => {
 
   // console.log(response);
 
+  t.ok(response.Ok, "Should receive sources for article")
+
   t.end()
 })
-*/
 
 test('cameron get article addresses authored by alice', (t) => {
-  t.plan(3)
-
-  const link = alice.call("articles", "main", "author_article", "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc")
-
-  console.log(link);
-
-  t.ok(link.Ok, "Alice should be able to become author of her article")
+  t.plan(2)
 
   const input = {
    agent_addr: alice.agentId
@@ -133,7 +129,7 @@ test('cameron get article addresses authored by alice', (t) => {
 
   const response = cameron.call("articles", "main", "get_authored_articles", input)
 
-  // console.log(response);
+  console.log(response);
 
   t.ok(response.Ok, "hdk::get_links shouldn't return Err")
   t.ok(response.Ok.addresses[0] != undefined, "Should return addresses of live articles Alice has created")

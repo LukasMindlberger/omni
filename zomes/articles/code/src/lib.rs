@@ -143,13 +143,6 @@ define_zome! {
                 handler: article::delete_article
             }
 
-
-            author_article: { // shouldn't be a public function in future
-                inputs: |article_addr: Address|,
-                outputs: |result: Result<(), ZomeApiError>|,
-                handler: article::author_article
-            }
-
             get_authored_articles: {
                 inputs: |agent_addr: Address|,
                 outputs: |result: ZomeApiResult<GetLinksResult>|,
