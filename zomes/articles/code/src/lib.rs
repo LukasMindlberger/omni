@@ -20,8 +20,6 @@ use hdk::{
         cas::content::Address,
         dna::entry_types::Sharing,
         entry::Entry,
-        error::HolochainError,
-        json::JsonString,
     }
 };
 use holochain_wasm_utils::api_serialization::{
@@ -149,11 +147,11 @@ define_zome! {
                 handler: article::get_authored_articles
             }
 
-            create_keyword: {
-                inputs: |keyword: Keyword|,
-                outputs: |result: ZomeApiResult<Address>|,
-                handler: keyword::create_keyword
-            }
+            // create_keyword: {
+            //     inputs: |keyword: Keyword|,
+            //     outputs: |result: ZomeApiResult<Address>|,
+            //     handler: keyword::create_keyword
+            // }
 
             get_keyword: {
                 inputs: |keyword_addr: Address|,
@@ -162,7 +160,7 @@ define_zome! {
             }
 
             link_article_from_keyword: {
-                inputs: |keyword_addr: Address, article_addr: Address|,
+                inputs: |keyword: Keyword, article_addr: Address|,
                 outputs: |result: Result<(), ZomeApiError>|,
                 handler: keyword::link_article_from_keyword
             }

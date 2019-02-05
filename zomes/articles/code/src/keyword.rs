@@ -22,7 +22,7 @@ impl Keyword {
     }
 }
 
-pub fn create_keyword(keyword: Keyword) -> ZomeApiResult<Address> {
+fn create_keyword(keyword: Keyword) -> ZomeApiResult<Address> {
     let keyword_entry = Entry::App("keyword".into(), keyword.into());
     hdk::commit_entry(&keyword_entry)
 }
@@ -31,7 +31,9 @@ pub fn get_keyword(keyword_addr: Address) -> ZomeApiResult<Option<Entry>> {
     hdk::get_entry(&keyword_addr)
 }
 
-pub fn link_article_from_keyword(keyword_addr: Address, article_addr: Address) -> Result<(), ZomeApiError> {
+pub fn link_article_from_keyword(keyword: Keyword, article_addr: Address) -> Result<(), ZomeApiError> {
+    let keyword_addr = create_keyword(keyword)?;
+
     hdk::link_entries(&article_addr, &keyword_addr, "article_from_keyword")
 }
 

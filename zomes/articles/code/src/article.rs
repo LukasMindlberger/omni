@@ -1,6 +1,6 @@
 use hdk::{
     error::{
-        ZomeApiResult, ZomeApiError
+        ZomeApiResult
     },
     holochain_core_types::{
         entry::Entry,
@@ -69,6 +69,5 @@ pub fn delete_article(article_addr: Address) -> ZomeApiResult<()> {
 }
 
 pub fn get_authored_articles(agent_addr: Address) -> ZomeApiResult<GetLinksResult> {
-    let address = agent_addr.into();
-    hdk::get_links(&address, "articles_from_agent")
+    hdk::get_links(&agent_addr, "articles_from_agent")
 }

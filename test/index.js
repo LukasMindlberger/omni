@@ -104,6 +104,21 @@ test('get the article', (t) => {
   t.end()
 })
 
+test('link article to keyword', (t) => {
+  const input = {
+    keyword: {
+      keyword: "Astrophysics"
+    },
+    article_addr: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
+  }
+
+  const response = alice.call("articles", "main", "link_article_from_keyword", input)
+
+  console.log(response);
+
+  t.end()
+})
+
 test('get article sources', (t) => {
   t.plan(1)
 
