@@ -20,7 +20,13 @@ use hdk::{
         cas::content::Address,
         dna::entry_types::Sharing,
         entry::Entry,
-    }
+        json::JsonString,
+        error::HolochainError
+    },
+    AGENT_ADDRESS,
+    AGENT_ID_STR,
+    DNA_NAME,
+    DNA_ADDRESS
 };
 use holochain_wasm_utils::api_serialization::{
     get_links::GetLinksResult,
@@ -33,6 +39,23 @@ pub mod article;
 use article::Article;
 pub mod keyword;
 use keyword::Keyword;
+
+#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+pub struct Env {
+    dna_name: String,
+    dna_address: String,
+    agent_id: String,
+    agent_address: String,
+}
+
+fn handle_show_env() -> ZomeApiResult<Env> {
+    Ok(Env{
+        dna_name: DNA_NAME.to_string(),
+        dna_address: DNA_ADDRESS.to_string(),
+        agent_id: AGENT_ID_STR.to_string(),
+        agent_address: AGENT_ADDRESS.to_string(),
+    })
+}
 
 fn handle_get_sources_latest(address: Address) -> ZomeApiResult<GetEntryResult> {
     let options = GetEntryOptions{status_request: StatusRequestKind::Latest, entry: false, header: false, sources: true};
@@ -105,6 +128,12 @@ define_zome! {
 
     functions: {
         main (Public) {
+            show_env: {
+                inputs: | |,
+                outputs: |result: ZomeApiResult<Env>|,
+                handler: handle_show_env
+            }
+
             get_sources_latest: {
                 inputs: |address: Address|,
                 outputs: |result: ZomeApiResult<GetEntryResult>|,

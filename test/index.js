@@ -38,11 +38,23 @@ const cameron = container.makeCaller(cameronName, dnaPath)
 test('has agentId', (t) => {
   t.plan(2)
 
-  // console.log(alice.agentId);
-  // console.log(cameron.agentId);
+  console.log(alice.agentId);
+  console.log(cameron.agentId);
 
   t.ok(alice.agentId, "alice should have id")
   t.ok(cameron.agentId, "cameron should have id")
+})
+
+test('show environment data', (t) => {
+  t.plan(1)
+
+  const result = alice.call("articles", "main", "show_env", {})
+
+  console.log(result);
+
+  t.ok(result)
+
+  t.end()
 })
 
 test('alice send message to cameron', (t) => {
@@ -105,6 +117,7 @@ test('get the article', (t) => {
 })
 
 test('link article to keyword', (t) => {
+  t.plan(1)
   const input = {
     keyword: {
       keyword: "Astrophysics"
@@ -115,6 +128,8 @@ test('link article to keyword', (t) => {
   const response = alice.call("articles", "main", "link_article_from_keyword", input)
 
   console.log(response);
+
+  t.ok(response.ok, "Shouldn't receive unimplemented error")
 
   t.end()
 })
@@ -128,7 +143,7 @@ test('get article sources', (t) => {
 
   const response = cameron.call("articles", "main", "get_sources_latest", input)
 
-  // console.log(response);
+  console.log(response);
 
   t.ok(response.Ok, "Should receive sources for article")
 
