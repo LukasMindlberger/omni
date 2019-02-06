@@ -38,11 +38,23 @@ const cameron = container.makeCaller(cameronName, dnaPath)
 test('has agentId', (t) => {
   t.plan(2)
 
-  // console.log(alice.agentId);
-  // console.log(cameron.agentId);
+  console.log(alice.agentId);
+  console.log(cameron.agentId);
 
   t.ok(alice.agentId, "alice should have id")
   t.ok(cameron.agentId, "cameron should have id")
+})
+
+test('show environment data', (t) => {
+  t.plan(1)
+
+  const result = alice.call("articles", "main", "show_env", {})
+
+  console.log(result);
+
+  t.ok(result)
+
+  t.end()
 })
 
 test('alice send message to cameron', (t) => {
@@ -98,40 +110,44 @@ test('get the article', (t) => {
 
   // console.log(response);
 
-  t.ok(response.Ok, "hdk::get_entry should return article content at address for all users")
+  t.ok(response.Ok, "hdk::get_entry should return article content at address for any user")
   t.deepEqual(JSON.parse(response.Ok.App[1]), expect, "Returned article should match expected data")
 
   t.end()
 })
 
+test('link article to keyword', (t) => {
+  t.plan(1)
+  const input = {
+    keyword: {
+      keyword: "Astrophysics"
+    },
+    article_addr: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
+  }
+
+  const response = alice.call("articles", "main", "link_article_from_keyword", input)
+
+  console.log(response);
+
+  t.ok(response.ok, "Shouldn't receive unimplemented error")
+
+  t.end()
+})
+
 test('get article sources', (t) => {
+  t.plan(1)
+
   const input = {
     address: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
   }
 
   const response = cameron.call("articles", "main", "get_sources_latest", input)
 
-  // console.log(response);
+  console.log(response);
+
+  t.ok(response.Ok, "Should receive sources for article")
 
   t.end()
-})
-
-test('get article address by content', (t) => {
-  t.plan(1)
-
-  const input = {
-    title: "Article Title",
-    abst: "abstract text",
-    body: "body of article"
-  }
-
-  const expect = "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
-
-  const response = alice.call("articles", "main", "article_address", input)
-
-  // console.log(response);
-
-  t.deepEqual(response.Ok, expect, "Returned article should match expected data")
 })
 
 test('cameron get article addresses authored by alice', (t) => {
@@ -143,7 +159,7 @@ test('cameron get article addresses authored by alice', (t) => {
 
   const response = cameron.call("articles", "main", "get_authored_articles", input)
 
-  // console.log(response);
+  console.log(response);
 
   t.ok(response.Ok, "hdk::get_links shouldn't return Err")
   t.ok(response.Ok.addresses[0] != undefined, "Should return addresses of live articles Alice has created")

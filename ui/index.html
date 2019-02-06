@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Omni</title>
+	<meta charset="utf-8">
+	<title>Omni</title>
+
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <script src="src/app.js" charset="utf-8"></script>
+	<div id="page-wrapper">
+		<h1>Omni</h1>
+
+		<div id="status">Connecting...</div>
+
+		<ul id="messages"></ul>
+
+		<form id="message-form" action="#" method="post">
+			<textarea id="message" placeholder="Write your message here..." required></textarea>
+			<button type="submit">Send Message</button>
+			<button type="button" id="close">Close Connection</button>
+		</form>
+	</div>
+
+	<script src="build/app.bundle.js"></script>
 </body>
 </html>

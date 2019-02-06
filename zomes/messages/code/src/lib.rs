@@ -10,9 +10,14 @@ extern crate serde;
 extern crate serde_derive;
 extern crate holochain_core_types_derive;
 
-use hdk::holochain_core_types::{
+use hdk::{
+    error::{
+        ZomeApiResult
+    },
+    holochain_core_types::{
     cas::content::Address,
-    json::JsonString,
+    json::JsonString
+    }
 };
 
 // Direct node-to-node message for when peer is online only
@@ -21,6 +26,10 @@ fn handle_send_message(to_agent: Address, message: String) -> JsonString {
         Ok(result) => json!({"success": true, "payload": result}).into(),
         Err(hdk_err) => hdk_err.into(),
     }
+}
+
+fn handle_get_online_peers() -> ZomeApiResult<Vec<Address>> {
+    unimplemented!()
 }
 
 define_zome! {
@@ -41,4 +50,8 @@ define_zome! {
             }
         }
     }
+
+    // capabilities: {
+    //     public (Public) [send_message]
+    // }
 }
