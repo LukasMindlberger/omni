@@ -9,9 +9,9 @@
 </br></br></br>
 
 
-### Developers
+### Developers and fellow scholars
 
-If you're looking to contribute, check out the [**project boards**](https://github.com/OmniProject/omni/projects) or talk to other collaborators in our [**Holochain Mattermost channel**](https://chat.holochain.org/appsup/channels/app-omni).
+If you're looking to contribute, discuss, criticise or share ideas check out the [**project boards**](https://github.com/OmniProject/omni/projects) or talk with collaborators in our [**Holochain Mattermost channel**](https://chat.holochain.org/appsup/channels/app-omni).
 
 # Introduction
 
