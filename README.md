@@ -13,6 +13,20 @@
 
 If you're looking to contribute, discuss, criticise or share ideas check out the [**project boards**](https://github.com/OmniProject/omni/projects) or talk with collaborators in our [**Holochain Mattermost channel**](https://chat.holochain.org/appsup/channels/app-omni).
 
+## Installation & Usage
+
+You can try out the current pre-alpha version of Omni by following the instructions below:
+
+First install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now).
+
+Clone or download this repo and open up a command window in the project root with all the main folders in it (which would be `omni-develop` if you downloaded from the `develop` branch).
+
+Run the command:
+
+`hc run`
+
+Now, navigate to the `ui/` folder and open `index.html`, which will allow you to interact with the Omni app via a web browser. You can also press F12 and click on the Console tab to see a log of messages to and from the Holochain Conductor in real time (although, it will just be conducting Omni).
+
 # Introduction
 
 The Omni Project is helping to bring about the next generation of scholarly communications. The current scholarly publishing system is broken—new knowledge that benefits everyone is locked behind expensive paywalls and certain individuals and companies gain disproportionate levels of power and influence, allowing them to shape the system to work for them and not for the research ecosystem as a whole. More researchers and institutions are willing to fork the bill to allow anyone to read their research, but this can't possibly be sustainable. Simply put, scholars, institutions and commoners **are getting screwed**, and we're only just beginning to wake up to this fact—publishers write the rules of the game.
@@ -37,7 +51,7 @@ We also think distinguishing *quality* from *impact* would allow researchers to 
 
 ## Stuck in static
 
-Articles are still mostly treated as statically rendered documents with the figures and tables mashed obtrusively within the text. I often find myself scrolling up and down pages of text to find the figure being referenced, and then losing track of what I was just reading. This is an outdated way of viewing content, but many modern web platforms have come a long way to displaying content effectively. Reading articles can be much better with a little bit of UX design. 
+Articles are still mostly treated as statically rendered documents with the figures and tables mashed obtrusively within the text. I often find myself scrolling up and down pages of text to find the figure being referenced, and then losing track of what I was just reading. This is an outdated way of viewing content, but many modern web platforms have come a long way to displaying content effectively. Reading articles can be much better with a little bit of UX design.
 
 Digital storytelling allows for non-traditional forms of communication, which, if applied to scholarly communications, could greatly increase the comprehensibility and accessibility of research, as well as enabling large and dynamic artifacts to be displayed and interacted with nonlinearly.
 
