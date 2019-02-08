@@ -1,89 +1,67 @@
-// import { ws } from './ws';
-// window.onload = ws.handle_websocket()
+// Create event listeners
+const title = document.querySelector('#title')
+const abstract = document.querySelector('#abstract')
+const body = document.querySelector('#body')
+const address = document.querySelector('#address')
 
-window.onload = function () {
-  // Get references to elements on the page.
-  var form = document.getElementById('message-form');
-  var messageField = document.getElementById('message');
-  var messagesList = document.getElementById('messages');
-  var socketStatus = document.getElementById('status');
-  var closeBtn = document.getElementById('close');
+window.onload = () => {
+  // Add article
+  document.querySelector('#submit').addEventListener('click', (e) => {
+    event.preventDefault()
 
-  // Create a new WebSocket.
-  var socket = new WebSocket('ws://localhost:8888');
-
-  // Show a connected message when the WebSocket is opened.
-  socket.onopen = function(event) {
-    socketStatus.innerHTML = 'Connected to: ' + event.currentTarget.url;
-    socketStatus.className = 'open';
-  };
-
-  // Show a disconnected message when the WebSocket is closed.
-  socket.onclose = function(event) {
-    socketStatus.innerHTML = 'Disconnected from WebSocket.';
-    socketStatus.className = 'closed';
-  };
-
-  // Handle any errors that occur.
-  socket.onerror = function(error) {
-    console.log('WebSocket Error: ' + error);
-  };
-
-  // Handle messages sent by the server.
-  socket.onmessage = function(event) {
-    var message = event.data;
-    messagesList.innerHTML += '<li class="received"><span>Received:</span>' +
-    message + '</li>';
-  };
-
-  // Send a message when the form is submitted.
-  form.onsubmit = function(e) {
-    e.preventDefault();
-
-    // Retrieve the message from the textarea.
-    // var message = messageField.value;
-
-    const input = {
-      title: "Article Title",
-      abst: "abstract text",
-      body: "body of article"
+    const new_article = {
+      title: title.value,
+      abst: abstract.value,
+      body: body.value
     }
 
-    // test create article message
+    // TODO: use HTTP for simple request/response
+
     const message = JSON.stringify({
       jsonrpc: '2.0',
-      method: {
-        instance_id: 'QmaEPHKvEbzUfSryKVHuPgqsBpKh5fsi1dhS8YxrN8n37U',
-        zome_name: 'articles',
-        capability: 'main',
-        function_name: 'create_article',
-      },
-      params: input,
-      id: 1
+      method: 'test-instance/articles/main/create_article',
+      id: 1,
+      params: new_article
     })
 
     // Send the message through the WebSocket.
+    console.log(message);
     socket.send(message);
+  })
 
-    // Add the message to the messages list.
-    messagesList.innerHTML += '<li class="sent"><span>Sent:</span>' + message +
-                              '</li>';
+  // Get article
+  document.querySelector('#retrieve').addEventListener('click', (e) => {
+    e.preventDefault()
 
-    // Clear out the message field.
-    messageField.value = '';
+    const article_addr = {
+      article_addr: address.value
+    }
 
-    return false;
+    // TODO: use HTTP for simple request/response
+
+    const message = JSON.stringify({
+      jsonrpc: '2.0',
+      method: 'test-instance/articles/main/get_article',
+      id: 1,
+      params: article_addr
+    })
+
+    console.log(message);
+    socket.send(message);
+  })
+
+  // Create a new WebSocket.
+  const socket = new WebSocket('ws://localhost:8888');
+
+  console.log('WebSocket connection with Holochain Conductor initialised');
+
+  // Handle any errors that occur.
+  socket.onerror = function (error) {
+    console.error('WebSocket Error: ' + error);
   };
 
-  // Close the WebSocket connection when the close button is clicked.
-  closeBtn.onclick = function(e) {
-    e.preventDefault();
-
-    // Close the WebSocket.
-    socket.close();
-
-    return false;
+  // Handle messages sent by the server.
+  socket.onmessage = function (event) {
+    console.log(event.data);
   };
-
-  console.log('Holochain conductor WebSocket initialised');
 }
