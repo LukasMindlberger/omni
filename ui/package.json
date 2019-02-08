@@ -4,7 +4,7 @@
   "description": "Starter pack for compiling ES6+ apps to ES5",
   "main": "app.js",
   "scripts": {
-    "build": "webpack --mode production --progress",
+    "build": "webpack --mode production --progress"
   },
   "author": "Marcus Newton",
   "license": "MIT",

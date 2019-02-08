@@ -20,7 +20,7 @@ window.onload = () => {
 
   // Handle messages sent by the server.
   socket.onmessage = function (event) {
-    console.log(event.data);
+    console.log('[Response] <=', event.data);
   };
 
 
@@ -44,7 +44,7 @@ window.onload = () => {
     })
 
     // Send the message through the WebSocket.
-    console.log(message);
+    console.log('[Request] =>', message);
     socket.send(message);
   })
 
@@ -65,7 +65,7 @@ window.onload = () => {
       params: article_addr
     })
 
-    console.log(message);
+    console.log('[Request] =>', message);
     socket.send(message);
   })
 }
