@@ -16,14 +16,14 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
+    "rpc-websockets": "^4.3.3",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.1.14",
-    "rpc-websockets": "^4.3.3"
+    "webpack-dev-server": "^3.1.14"
   },
   "dependencies": {
-    "semantic-ui": "^2.4.2",
     "parcel": "^1.10.2",
+    "semantic-ui": "^2.4.2",
     "typescript": "^3.1.2"
   }
 }
