@@ -17,24 +17,9 @@ If you're looking to contribute, discuss, criticise or share ideas check out the
 
 You can try out the current pre-alpha version of Omni by following the instructions below.
 
-### Developers
-If you have Node.js installed and wish to tinker with the app or UI:
-
 Install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now)
 
 Clone or download this repo and run `npm run dev` from the project root. This will start up an Omni instance using Holochain, as well as a webpack dev server for the UI which updates whenever you save changes.
-
-### Users who want to quickly try out Omni as-is
-
-Install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now).
-
-Clone or download this repo and open up a command window in the project root with all the main folders in it (this would be the `omni-develop/` folder if you downloaded from the `develop` branch).
-
-Run the command:
-
-`hc run`
-
-Now, navigate to the `ui/` folder and open `index.html`, which will allow you to interact with the Omni app via a web browser.
 
 # Introduction
 
