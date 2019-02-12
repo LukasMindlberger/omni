@@ -27,7 +27,7 @@ Run the command:
 
 Now, navigate to the `ui/` folder and open `index.html`, which will allow you to interact with the Omni app via a web browser. You can also press F12 and click on the Console tab to see a log of messages to and from the Holochain Conductor in real time (although, it will just be conducting Omni).
 
-If you have [Node.js](https://nodejs.org/en/) installed you can just run `npm start` from the project root.
+If you wish to make changes and have Node.js install, you can just run `npm dev` from the project root, instead.
 
 # Introduction
 

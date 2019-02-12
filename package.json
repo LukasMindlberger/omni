@@ -10,7 +10,7 @@
   "scripts": {
     "start-app": "hc run",
     "start-ui": "npm run start --prefix ui",
-    "start": "concurrently \"npm run start-app\" \"npm run start-ui\""
+    "dev": "npm install && npm install --prefix ui && concurrently \"npm run start-app\" \"npm run start-ui\""
   },
   "repository": {
     "type": "git",
