@@ -1,10 +1,12 @@
 {
-  "name": "babel_webpacker",
-  "version": "1.0.0",
-  "description": "Starter pack for compiling ES6+ apps to ES5",
-  "main": "app.js",
+  "name": "hc_ui_webpacker",
+  "version": "0.1.0",
+  "description": "Basic UI development kit for Holochain web apps",
+  "main": "src/app.js",
   "scripts": {
-    "build": "webpack --mode production --progress"
+    "start": "webpack-dev-server --output-public-path=/build/  --mode development --progress --open --hot",
+    "build": "webpack --mode production --progress",
+    "client-clean": "rm -fr lib"
   },
   "author": "Marcus Newton",
   "license": "MIT",
@@ -14,10 +16,14 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
-    "webpack": "^4.26.1",
-    "webpack-cli": "^3.1.2"
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14",
+    "rpc-websockets": "^4.3.3"
   },
   "dependencies": {
-    "semantic-ui": "^2.4.2"
+    "semantic-ui": "^2.4.2",
+    "parcel": "^1.10.2",
+    "typescript": "^3.1.2"
   }
 }

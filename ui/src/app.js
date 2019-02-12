@@ -2,70 +2,98 @@
 const title = document.querySelector('#title')
 const abstract = document.querySelector('#abstract')
 const body = document.querySelector('#body')
-const submit = document.querySelector('#submit')
-
+const submitBtn = document.querySelector('#submitBtn')
+const message = document.getElementById("message")
+const clearBtn = document.querySelector('#clearBtn')
 const address = document.querySelector('#address')
-const retrieve = document.querySelector('#retrieve')
+const retrieveBtn = document.querySelector("#retrieveBtn")
+const show_article = document.querySelector('#show_article')
 
-window.onload = () => {
-  // Create a new WebSocket.
-  const socket = new WebSocket('ws://localhost:8888');
+const port = 8888
+const holochainUrl =  `ws://localhost:${port}/`
 
-  console.log('WebSocket connection with Holochain Conductor initialised');
+clearBtn.addEventListener('click', e => {
+  title.value = ''
+  abstract.value = ''
+  body.value = ''
+})
 
-  // Handle any errors that occur.
-  socket.onerror = function (error) {
-    console.error('WebSocket Error: ' + error);
-  };
+window.holochainClient.connect(holochainUrl)
+.then(({call, close}) => {
 
-  // Handle messages sent by the server.
-  socket.onmessage = function (event) {
-    console.log('[Response] <=', event.data);
-  };
-
-
-  // Add article event listener.
-  submit.addEventListener('click', (e) => {
-    event.preventDefault()
-
-    const new_article = {
-      title: title.value,
-      abst: abstract.value,
-      body: body.value
-    }
-
-    // TODO: use HTTP for simple request/response.
-
-    const message = JSON.stringify({
-      jsonrpc: '2.0',
-      method: 'test-instance/articles/main/create_article',
-      id: 1,
-      params: new_article
-    })
-
-    // Send the message through the WebSocket.
-    console.log('[Request] =>', message);
-    socket.send(message);
-  })
-
-  // Get article event listener.
-  retrieve.addEventListener('click', (e) => {
+  submitBtn.addEventListener('click', e => {
     e.preventDefault()
 
-    const article_addr = {
-      article_addr: address.value
-    }
+    submitBtn.classList.add("loading")
 
-    // TODO: use HTTP for simple request/response.
+    call('info/instances')().then(info => {
+      const instance = 'test-instance'
+      const zomeName = 'articles'
+      const capability = 'main'
+      const functionName = 'create_article'
+      const params = {
+        title: title.value,
+        abst: abstract.value,
+        body: body.value
+      }
+      const createArticle = call(instance, zomeName, capability, functionName)
 
-    const message = JSON.stringify({
-      jsonrpc: '2.0',
-      method: 'test-instance/articles/main/get_article',
-      id: 1,
-      params: article_addr
+      createArticle(params)
+      .then((res) => {
+        const response = JSON.parse(res)
+
+        if (response.Err) {
+          console.error(response.Err);
+          submitBtn.classList.remove("loading")
+          message.style.display = "none"
+        } else {
+          message.innerText = 'Address: ' + response.Ok
+          message.style.display = "block"
+          submitBtn.classList.remove("loading")
+        }
+      })
     })
-
-    console.log('[Request] =>', message);
-    socket.send(message);
   })
-}
+
+
+  retrieveBtn.addEventListener('click', e => {
+    e.preventDefault()
+
+    retrieveBtn.classList.add("loading")
+    show_article.style.display = "block"
+
+    call('info/instances')().then(info => {
+      const instance = 'test-instance'
+      const zomeName = 'articles'
+      const capability = 'main'
+      const functionName = 'get_article'
+      const params = {
+        article_addr: address.value
+      }
+      const getArticle = call(instance, zomeName, capability, functionName)
+
+      getArticle(params)
+      .then((res) => {
+        const response = JSON.parse(res)
+
+        if (response.Err) {
+          console.error(response.Err)
+          show_article.style.display = "none"
+          retrieveBtn.classList.remove("loading")
+        } else {
+          const article = JSON.parse(response.Ok.App[1])
+
+          show_article.innerHTML = `
+          <div class="ui center aligned header">${article.title}</div>
+          <div class="ui segment">${article.abst}</div>
+          <div class="ui basic segment">
+            <div style="white-space: pre-wrap">${article.body}</div>
+          </div>
+          `
+
+          retrieveBtn.classList.remove("loading")
+        }
+      })
+    })
+  })
+})
