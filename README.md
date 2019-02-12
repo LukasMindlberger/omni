@@ -22,7 +22,7 @@ If you have Node.js installed and wish to tinker with the UI:
 
 Install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now)
 
-Clone or download this repo and run `npm dev` from the project root. This will start up an Omni instance using Holochain, as well as a webpack dev server for the UI which updates whenever you save changes.
+Clone or download this repo and run `npm run dev` from the project root. This will start up an Omni instance using Holochain, as well as a webpack dev server for the UI which updates whenever you save changes.
 
 ### Users who want to quickly try out Omni as-is
 
