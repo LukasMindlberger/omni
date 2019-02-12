@@ -19,13 +19,15 @@ You can try out the current pre-alpha version of Omni by following the instructi
 
 First install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now).
 
-Clone or download this repo and open up a command window in the project root with all the main folders in it (which would be `omni-develop` if you downloaded from the `develop` branch).
+Clone or download this repo and open up a command window in the project root with all the main folders in it (which would be the `omni-develop/` folder if you downloaded from the `develop` branch).
 
 Run the command:
 
 `hc run`
 
 Now, navigate to the `ui/` folder and open `index.html`, which will allow you to interact with the Omni app via a web browser. You can also press F12 and click on the Console tab to see a log of messages to and from the Holochain Conductor in real time (although, it will just be conducting Omni).
+
+If you have [Node.js](https://nodejs.org/en/) installed you can just run `npm start` from the project root.
 
 # Introduction
 

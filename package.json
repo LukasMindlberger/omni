@@ -1,0 +1,28 @@
+{
+  "name": "omni",
+  "version": "1.0.0",
+  "description": "Contains dev commands for quickly running Omni",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "start-app": "hc run",
+    "start-ui": "npm run start --prefix ui",
+    "start": "concurrently \"npm run start-app\" \"npm run start-ui\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OmniProject/omni.git"
+  },
+  "author": "Marcus Newton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OmniProject/omni/issues"
+  },
+  "homepage": "https://github.com/OmniProject/omni#readme",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
