@@ -15,19 +15,26 @@ If you're looking to contribute, discuss, criticise or share ideas check out the
 
 ## Installation & Usage
 
-You can try out the current pre-alpha version of Omni by following the instructions below:
+You can try out the current pre-alpha version of Omni by following the instructions below.
 
-First install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now).
+### Developers
+If you have Node.js installed and wish to tinker with the UI:
 
-Clone or download this repo and open up a command window in the project root with all the main folders in it (which would be the `omni-develop/` folder if you downloaded from the `develop` branch).
+Install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now)
+
+Clone or download this repo and run `npm dev` from the project root. This will start up an Omni instance using Holochain, as well as a webpack dev server for the UI which updates whenever you save changes.
+
+### Users who want to quickly try out Omni as-is
+
+Install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now).
+
+Clone or download this repo and open up a command window in the project root with all the main folders in it (this would be the `omni-develop/` folder if you downloaded from the `develop` branch).
 
 Run the command:
 
 `hc run`
 
-Now, navigate to the `ui/` folder and open `index.html`, which will allow you to interact with the Omni app via a web browser. You can also press F12 and click on the Console tab to see a log of messages to and from the Holochain Conductor in real time (although, it will just be conducting Omni).
-
-If you wish to make changes and have Node.js install, you can just run `npm dev` from the project root, instead.
+Now, navigate to the `ui/` folder and open `index.html`, which will allow you to interact with the Omni app via a web browser.
 
 # Introduction
 
