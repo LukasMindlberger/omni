@@ -18,7 +18,7 @@ If you're looking to contribute, discuss, criticise or share ideas check out the
 You can try out the current pre-alpha version of Omni by following the instructions below.
 
 ### Developers
-If you have Node.js installed and wish to tinker with the UI:
+If you have Node.js installed and wish to tinker with the app or UI:
 
 Install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now)
 
