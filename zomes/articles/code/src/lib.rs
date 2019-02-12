@@ -82,7 +82,7 @@ define_zome! {
                 hdk::ValidationPackageDefinition::Entry
             },
             validation: |article: Article, _validation_data: hdk::ValidationData| {(
-                    (article.title().len() < 300) & (article.abst().len() < 500)
+                    (article.title().len() < 300) & (article.abst().len() < 900)
                 )
                 .ok_or_else(|| String::from("Article struct is invalid"))
             },
