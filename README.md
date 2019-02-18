@@ -15,13 +15,7 @@ If you're looking to contribute, discuss, criticise or share ideas check out the
 
 ## Installation & Usage
 
-You can try out the current pre-alpha version of Omni by following the instructions below:
-
-First, install [Holochain](https://holochain.org) by following the [quick start guide here](https://developer.holochain.org/start.html) (only up to Step 4 for now).
-
-Clone or download this repo and run the command `npm run dev-install` from the project root. This will start up an Omni instance with the Holochain engine, as well as a Webpack dev server for the UI which updates whenever you make changes.
-
-After you've run the above command once, use `npm run dev-start` instead.
+See the [releases](https://github.com/OmniProject/omni/releases).
 
 # Introduction
 
