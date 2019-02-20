@@ -16,13 +16,15 @@ use hdk::{
     },
     holochain_core_types::{
     cas::content::Address,
-    json::JsonString
+    json::JsonString,
+    error::HolochainError,
+    time::Timeout
     }
 };
 
 // Direct node-to-node message for when peer is online only
 fn handle_send_message(to_agent: Address, message: String) -> JsonString {
-    match hdk::send(to_agent, message) {
+    match hdk::send(to_agent, message, Timeout::new(60000)) {
         Ok(result) => json!({"success": true, "payload": result}).into(),
         Err(hdk_err) => hdk_err.into(),
     }
@@ -41,17 +43,16 @@ define_zome! {
         format!("Received: {}", payload)
     }
 
-    functions: {
-        main (Public) {
-            send_message: {
-                inputs: |to_agent: Address, message: String|,
-                outputs: |result: JsonString|,
-                handler: handle_send_message
-            }
-        }
-    }
+    functions: [
 
-    // capabilities: {
-    //     public (Public) [send_message]
-    // }
+    send_message: {
+        inputs: |to_agent: Address, message: String|,
+        outputs: |result: JsonString|,
+        handler: handle_send_message
+    }
+    ]
+
+    traits: {
+        hc_public [send_message]
+    }
 }

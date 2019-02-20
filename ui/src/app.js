@@ -27,16 +27,16 @@ window.holochainClient.connect(holochainUrl)
     submitBtn.classList.add("loading")
 
     call('info/instances')().then(info => {
+      // console.log(info)
       const instance = 'test-instance'
       const zomeName = 'articles'
-      const capability = 'main'
       const functionName = 'create_article'
       const params = {
         title: title.value,
         abst: abstract.value,
         body: body.value
       }
-      const createArticle = call(instance, zomeName, capability, functionName)
+      const createArticle = call(instance, zomeName, functionName)
 
       createArticle(params)
       .then((res) => {
@@ -65,12 +65,11 @@ window.holochainClient.connect(holochainUrl)
     call('info/instances')().then(info => {
       const instance = 'test-instance'
       const zomeName = 'articles'
-      const capability = 'main'
       const functionName = 'get_article'
       const params = {
         article_addr: address.value
       }
-      const getArticle = call(instance, zomeName, capability, functionName)
+      const getArticle = call(instance, zomeName, functionName)
 
       getArticle(params)
       .then((res) => {

@@ -6,7 +6,7 @@ const test = require('tape')
 //   .pipe(tapSpec())
 //   .pipe(process.stdout);
 
-const { Config, Container } = require('@holochain/holochain-nodejs')
+const { Config, Conductor } = require('@holochain/holochain-nodejs')
 
 const dnaPath = "./dist/bundle.json"
 
@@ -26,7 +26,7 @@ const container = (() => {
 
   const containerConfig = Config.container([instanceAlice, instanceCameron])
 
-  return new Container(containerConfig)
+  return new Conductor(containerConfig)
 })()
 
 container.start()

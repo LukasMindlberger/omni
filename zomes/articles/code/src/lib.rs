@@ -21,7 +21,8 @@ use hdk::{
         dna::entry_types::Sharing,
         entry::Entry,
         json::JsonString,
-        error::HolochainError
+        error::HolochainError,
+        time::Timeout
     },
     AGENT_ADDRESS,
     AGENT_ID_STR,
@@ -58,13 +59,13 @@ fn handle_show_env() -> ZomeApiResult<Env> {
 }
 
 fn handle_get_sources_latest(address: Address) -> ZomeApiResult<GetEntryResult> {
-    let options = GetEntryOptions{status_request: StatusRequestKind::Latest, entry: false, header: false, sources: true};
+    let options = GetEntryOptions{status_request: StatusRequestKind::Latest, entry: false, headers: false, timeout: Timeout::new(10000)};
 
     hdk::get_entry_result(&address, options)
 }
 
 fn handle_get_sources_initial(address: Address) -> ZomeApiResult<GetEntryResult> {
-    let options = GetEntryOptions{status_request: StatusRequestKind::Initial, entry: false, header: false, sources: true};
+    let options = GetEntryOptions{status_request: StatusRequestKind::Initial, entry: false, headers: false, timeout: Timeout::new(10000)};
 
     hdk::get_entry_result(&address, options)
 }
@@ -126,94 +127,96 @@ define_zome! {
 
     genesis: || { Ok(()) }
 
-    functions: {
-        main (Public) {
-            show_env: {
-                inputs: | |,
-                outputs: |result: ZomeApiResult<Env>|,
-                handler: handle_show_env
-            }
+    functions: [
 
-            get_sources_latest: {
-                inputs: |address: Address|,
-                outputs: |result: ZomeApiResult<GetEntryResult>|,
-                handler: handle_get_sources_latest
-            }
-
-            get_sources_initial: {
-                inputs: |address: Address|,
-                outputs: |result: ZomeApiResult<GetEntryResult>|,
-                handler: handle_get_sources_initial
-            }
-
-            create_article: {
-                inputs: |title: String, abst: String, body: String|,
-                outputs: |result: ZomeApiResult<Address>|,
-                handler: article::create_article
-            }
-
-            get_article: {
-                inputs: |article_addr: Address|,
-                outputs: |result: ZomeApiResult<Option<Entry>>|,
-                handler: article::get_article
-            }
-
-            update_article: {
-                inputs: |article_addr: Address, title: String, abst: String, body: String|,
-                outputs: |result: ZomeApiResult<Address>|,
-                handler: article::update_article
-            }
-
-            delete_article: {
-                inputs: |article_addr: Address|,
-                outputs: |result: ZomeApiResult<()>|,
-                handler: article::delete_article
-            }
-
-            get_authored_articles: {
-                inputs: |agent_addr: Address|,
-                outputs: |result: ZomeApiResult<GetLinksResult>|,
-                handler: article::get_authored_articles
-            }
-
-            // create_keyword: {
-            //     inputs: |keyword: Keyword|,
-            //     outputs: |result: ZomeApiResult<Address>|,
-            //     handler: keyword::create_keyword
-            // }
-
-            get_keyword: {
-                inputs: |keyword_addr: Address|,
-                outputs: |result: ZomeApiResult<Option<Entry>>|,
-                handler: keyword::get_keyword
-            }
-
-            link_article_from_keyword: {
-                inputs: |keyword: Keyword, article_addr: Address|,
-                outputs: |result: Result<(), ZomeApiError>|,
-                handler: keyword::link_article_from_keyword
-            }
-
-            get_articles_from_keyword: {
-                inputs: |keyword_addr: Address|,
-                outputs: |result: ZomeApiResult<GetLinksResult>|,
-                handler: keyword::get_articles_from_keyword
-            }
-        }
+    show_env: {
+        inputs: | |,
+        outputs: |result: ZomeApiResult<Env>|,
+        handler: handle_show_env
     }
 
-    // capabilities: {
-    //     public (Public) [
-    //         create_article,
-    //         get_article,
-    //         update_article,
-    //         delete_article,
-    //         author_article,
-    //         get_authored_articles,
-    //         create_keyword,
-    //         get_keyword,
-    //         link_article_from_keyword,
-    //         get_articles_from_keyword
-    //     ]
+    get_sources_latest: {
+        inputs: |address: Address|,
+        outputs: |result: ZomeApiResult<GetEntryResult>|,
+        handler: handle_get_sources_latest
+    }
+
+    get_sources_initial: {
+        inputs: |address: Address|,
+        outputs: |result: ZomeApiResult<GetEntryResult>|,
+        handler: handle_get_sources_initial
+    }
+
+    create_article: {
+        inputs: |title: String, abst: String, body: String|,
+        outputs: |result: ZomeApiResult<Address>|,
+        handler: article::create_article
+    }
+
+    get_article: {
+        inputs: |article_addr: Address|,
+        outputs: |result: ZomeApiResult<Option<Entry>>|,
+        handler: article::get_article
+    }
+
+    update_article: {
+        inputs: |article_addr: Address, title: String, abst: String, body: String|,
+        outputs: |result: ZomeApiResult<Address>|,
+        handler: article::update_article
+    }
+
+    delete_article: {
+        inputs: |article_addr: Address|,
+        outputs: |result: ZomeApiResult<()>|,
+        handler: article::delete_article
+    }
+
+    get_authored_articles: {
+        inputs: |agent_addr: Address|,
+        outputs: |result: ZomeApiResult<GetLinksResult>|,
+        handler: article::get_authored_articles
+    }
+
+    // create_keyword: {
+    //     inputs: |keyword: Keyword|,
+    //     outputs: |result: ZomeApiResult<Address>|,
+    //     handler: keyword::create_keyword
     // }
+
+    get_keyword: {
+        inputs: |keyword_addr: Address|,
+        outputs: |result: ZomeApiResult<Option<Entry>>|,
+        handler: keyword::get_keyword
+    }
+
+    link_article_from_keyword: {
+        inputs: |keyword: Keyword, article_addr: Address|,
+        outputs: |result: Result<(), ZomeApiError>|,
+        handler: keyword::link_article_from_keyword
+    }
+
+    get_articles_from_keyword: {
+        inputs: |keyword_addr: Address|,
+        outputs: |result: ZomeApiResult<GetLinksResult>|,
+        handler: keyword::get_articles_from_keyword
+    }
+    ]
+
+    traits: {
+        hc_public [
+            show_env,
+            get_sources_latest,
+            get_sources_initial,
+            create_article,
+            get_article,
+            update_article,
+            delete_article,
+            author_article,
+            get_authored_articles,
+            // create_keyword,
+            get_keyword,
+            link_article_from_keyword,
+            get_articles_from_keyword
+        ]
+    }
 }

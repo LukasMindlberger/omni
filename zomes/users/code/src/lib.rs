@@ -74,43 +74,42 @@ define_zome! {
 
     genesis: || { Ok(()) }
 
-    functions: {
-        main (Public) {
-            create_user: {
-                inputs: |user: NewUser|,
-                outputs: |result: ZomeApiResult<Address>|,
-                handler: user::create_user
-            }
-            get_user: {
-                inputs: |user_addr: Address|,
-                outputs: |result: ZomeApiResult<Option<Entry>>|,
-                handler: user::get_user
-            }
-            create_organisation: {
-                inputs: |org: Org|,
-                outputs: |result: ZomeApiResult<Address>|,
-                handler: affiliation::create_organisation
-            }
-            get_organisation: {
-                inputs: |org_addr: Address|,
-                outputs: |result: ZomeApiResult<Option<Entry>>|,
-                handler: affiliation::get_organisation
-            }
-            affiliate_user: {
-                inputs: |user_addr: Address, org_addr: Address|,
-                outputs: |result: Result<(), ZomeApiError>|,
-                handler: handle_affiliate_user
-            }
-        }
+    functions:
+    [
+    create_user: {
+        inputs: |user: NewUser|,
+        outputs: |result: ZomeApiResult<Address>|,
+        handler: user::create_user
     }
+    get_user: {
+        inputs: |user_addr: Address|,
+        outputs: |result: ZomeApiResult<Option<Entry>>|,
+        handler: user::get_user
+    }
+    create_organisation: {
+        inputs: |org: Org|,
+        outputs: |result: ZomeApiResult<Address>|,
+        handler: affiliation::create_organisation
+    }
+    get_organisation: {
+        inputs: |org_addr: Address|,
+        outputs: |result: ZomeApiResult<Option<Entry>>|,
+        handler: affiliation::get_organisation
+    }
+    affiliate_user: {
+        inputs: |user_addr: Address, org_addr: Address|,
+        outputs: |result: Result<(), ZomeApiError>|,
+        handler: handle_affiliate_user
+    }
+    ]
 
-    // capabilities: {
-    //     public (Public) [
-    //         create_user,
-    //         get_user,
-    //         create_organisation,
-    //         get_organisation,
-    //         affiliate_user
-    //     ]
-    // }
+    traits: {
+        hc_public [
+        create_user,
+        get_user,
+        create_organisation,
+        get_organisation,
+        affiliate_user
+        ]
+    }
 }
