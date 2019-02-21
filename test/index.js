@@ -11,43 +11,143 @@ const instanceAlice = Config.instance(agentAlice, dna);
 const instanceCameron = Config.instance(agentCameron, dna);
 const scenario = new Scenario([instanceAlice, instanceCameron]);
 
-scenario.runTape("has agentID", (t, { alice, cameron }) => {
-  t.plan(2);
+// TESTS
+// (tip: add tests you're working on at the top so you don't have to sit through all the other tests (took me too long to realise))
 
-  console.log(alice.agentId);
-  console.log(cameron.agentId);
+scenario.runTape(
+  "alice create article, cameron fail to delete it",
+  (t, { alice, cameron }) => {
+    const create_input = {
+      title: "4 Article Title",
+      abst: "4 abstract text",
+      body: "4 body of article"
+    };
 
-  t.ok(alice.agentId, "alice should have id");
-  t.ok(cameron.agentId, "cameron should have id");
-});
+    const create_response = alice.call(
+      "articles",
+      "create_article",
+      create_input
+    );
 
-scenario.runTape("show environment data", (t, { alice, cameron }) => {
-  t.plan(1);
+    // console.log(create_response);
 
-  const result = alice.call("articles", "show_env", {});
+    const delete_input = {
+      article_addr: create_response.Ok
+    };
 
-  console.log(result);
+    const delete_response = cameron.call(
+      "articles",
+      "delete_article",
+      delete_input
+    );
 
-  t.ok(result);
-});
+    // console.log(delete_response);
 
-scenario.runTape("alice send message to cameron", (t, { alice, cameron }) => {
-  t.plan(1);
+    if (delete_response.hasOwnProperty("Err")) {
+      if (delete_response.Err.hasOwnProperty("Internal")) {
+        const error = JSON.parse(delete_response.Err.Internal).kind;
 
-  const input = {
-    to_agent: cameron.agentId,
-    message: "Hi Cameron"
-  };
+        console.log(error);
+      }
+    } else if (delete_response.hasOwnProperty("Ok")) {
+      t.notOk(
+        delete_response.Ok === null,
+        "Cameron shouldn't be able to delete Alice's article"
+      );
+    }
+  }
+);
 
-  const response = alice.call("messages", "send_message", input);
+scenario.runTape(
+  "create article exceeding valid title length",
+  (t, { alice, cameron }) => {
+    const input = {
+      title: "haH" + "A".repeat(300),
+      abst: "abstract text",
+      body: "body of article"
+    };
 
-  // console.log(response);
+    const response = cameron.call("articles", "create_article", input);
 
-  t.ok(
-    response.success,
-    "Message should reach destination if both agents online"
-  );
-});
+    // console.log(response);
+
+    if (response.hasOwnProperty("Err")) {
+      if (response.Err.hasOwnProperty("Internal")) {
+        const error = JSON.parse(response.Err.Internal).kind;
+
+        // console.log(error);
+      }
+    }
+
+    t.ok(
+      JSON.parse(response.Err.Internal).kind.ValidationFailed,
+      "Validation should fail"
+    );
+  }
+);
+
+scenario.runTape(
+  "cameron get article addresses authored by alice",
+  (t, { alice, cameron }) => {
+    t.plan(2);
+
+    const input = {
+      agent_addr: alice.agentId
+    };
+
+    const response = cameron.call("articles", "get_authored_articles", input);
+
+    // console.log(response);
+
+    t.ok(response.Ok, "hdk::get_links shouldn't return Err");
+    t.ok(
+      response.Ok.addresses[0],
+      "Should return addresses of live articles Alice has created"
+    );
+  }
+);
+
+scenario.runTape(
+  "link article from keyword, then get articles from keyword",
+  (t, { alice, cameron }) => {
+    t.plan(2);
+
+    const response1 = alice.call("articles", "create_article", {
+      title: "Article Title",
+      abst: "abstract text",
+      body: "body of article"
+    });
+
+    // console.log(response1);
+
+    const input = {
+      keyword: "Astrophysics",
+      article_addr: response1.Ok
+    };
+
+    const response2 = alice.call(
+      "articles",
+      "create_and_link_keyword_to_article",
+      input
+    );
+
+    // console.log(response2);
+
+    t.ok(response2.Ok === null, "article should link from keyword");
+
+    // Now get back articles
+    const response3 = cameron.call("articles", "get_articles_from_keyword", {
+      keyword: input.keyword
+    });
+
+    console.log(response3.Ok.addresses);
+
+    t.ok(
+      response3.Ok.addresses[0],
+      "should retrieve article addresses from keyword"
+    );
+  }
+);
 
 scenario.runTape(
   "create an article and get the article",
@@ -89,274 +189,40 @@ scenario.runTape(
   }
 );
 
-/*
-test("link article to keyword", t => {
-  t.plan(1);
-  const input = {
-    keyword: {
-      keyword: "Astrophysics"
-    },
-    article_addr: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
-  };
-
-  const response = alice.call(
-    "articles",
-    "main",
-    "link_article_from_keyword",
-    input
-  );
-
-  console.log(response);
-
-  t.ok(response.ok, "Shouldn't receive unimplemented error");
-
-  t.end();
-});
-
-test("get article sources", t => {
+scenario.runTape("alice send message to cameron", (t, { alice, cameron }) => {
   t.plan(1);
 
   const input = {
-    address: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
+    to_agent: cameron.agentId,
+    message: "Hi Cameron"
   };
 
-  const response = cameron.call(
-    "articles",
-    "main",
-    "get_sources_latest",
-    input
+  const response = alice.call("messages", "send_message", input);
+
+  // console.log(response);
+
+  t.ok(
+    response.success,
+    "Message should reach destination if both agents online"
   );
-
-  console.log(response);
-
-  t.ok(response.Ok, "Should receive sources for article");
-
-  t.end();
 });
 
-test("cameron get article addresses authored by alice", t => {
+scenario.runTape("show environment data", (t, { alice, cameron }) => {
+  t.plan(1);
+
+  const result = alice.call("articles", "show_env", {});
+
+  console.log(result);
+
+  t.ok(result);
+});
+
+scenario.runTape("has agentID", (t, { alice, cameron }) => {
   t.plan(2);
 
-  const input = {
-    agent_addr: alice.agentId
-  };
+  console.log(alice.agentId);
+  console.log(cameron.agentId);
 
-  const response = cameron.call(
-    "articles",
-    "main",
-    "get_authored_articles",
-    input
-  );
-
-  console.log(response);
-
-  t.ok(response.Ok, "hdk::get_links shouldn't return Err");
-  t.ok(
-    response.Ok.addresses[0] != undefined,
-    "Should return addresses of live articles Alice has created"
-  );
-
-  t.end();
+  t.ok(alice.agentId, "alice should have id");
+  t.ok(cameron.agentId, "cameron should have id");
 });
-
-test("delete the article", t => {
-  t.plan(1);
-
-  const input = {
-    article_addr: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
-  };
-
-  const response = alice.call("articles", "main", "delete_article", input);
-
-  // console.log(response);
-
-  t.ok(response.Ok === null, "Alice should be able to delete her article");
-
-  t.end();
-});
-
-test("fail to get deleted article", t => {
-  t.plan(1);
-
-  const input = {
-    article_addr: "QmTuvXiW6MRXG4gQsXSTPPVqxwPCp6ytDxboiLVsTSThbc"
-  };
-
-  const response = alice.call("articles", "main", "get_article", input);
-
-  // console.log(response);
-
-  t.ok(response.Ok === null, "Deletion of entry should return null");
-
-  t.end();
-});
-
-test("create an article and then update it", t => {
-  t.plan(4);
-
-  const create_input = {
-    title: "1 Article Title",
-    abst: "1 abstract text",
-    body: "1 body of article"
-  };
-
-  const create_response = alice.call(
-    "articles",
-    "main",
-    "create_article",
-    create_input
-  );
-
-  // console.log(create_response);
-
-  t.ok(create_response.Ok, "Alice should create an article");
-  t.deepEqual(
-    create_response.Ok.length,
-    46,
-    "Should get back article address of 46 chars"
-  );
-
-  const update_input = {
-    article_addr: create_response.Ok,
-    title: "2 Article Title",
-    abst: "2 abstract text",
-    body: "2 body of article"
-  };
-
-  const update_response = alice.call(
-    "articles",
-    "main",
-    "update_article",
-    update_input
-  );
-
-  // console.log(update_response);
-
-  t.ok(update_response.Ok, "hdk::update_entry shouldn't return Err");
-  t.deepEqual(
-    update_response.Ok.length,
-    46,
-    "Should return address hash with 46 chars"
-  );
-
-  t.end();
-});
-
-test("alice create article, cameron get it", t => {
-  t.plan(3);
-
-  const create_input = {
-    title: "3 Article Title",
-    abst: "3 abstract text",
-    body: "3 body of article"
-  };
-
-  const create_response = alice.call(
-    "articles",
-    "main",
-    "create_article",
-    create_input
-  );
-
-  // console.log(create_response);
-
-  t.ok(create_response.Ok, "Alice should create an article");
-
-  const get_input = {
-    article_addr: create_response.Ok
-  };
-
-  const get_response = cameron.call(
-    "articles",
-    "main",
-    "get_article",
-    get_input
-  );
-
-  // console.log(get_response);
-
-  t.ok(get_response.Ok, "Cameron should be able to get Alice's article");
-  t.deepEqual(
-    JSON.parse(get_response.Ok.App[1]),
-    create_input,
-    "Returned article should match article Alice just made in this test"
-  );
-
-  t.end();
-});
-
-test("create article exceeding valid title length", t => {
-  const input = {
-    title: "haH" + "A".repeat(300),
-    abst: "abstract text",
-    body: "body of article"
-  };
-
-  const response = cameron.call("articles", "main", "create_article", input);
-
-  // console.log(response);
-
-  if (response.hasOwnProperty("Err")) {
-    if (response.Err.hasOwnProperty("Internal")) {
-      const error = JSON.parse(response.Err.Internal).kind;
-
-      // console.log(error);
-    }
-  }
-
-  t.ok(
-    JSON.parse(response.Err.Internal).kind.ValidationFailed,
-    "Validation should fail"
-  );
-
-  t.end();
-});
-
-test("alice create article, cameron fail to delete it", t => {
-  const create_input = {
-    title: "4 Article Title",
-    abst: "4 abstract text",
-    body: "4 body of article"
-  };
-
-  const create_response = alice.call(
-    "articles",
-    "main",
-    "create_article",
-    create_input
-  );
-
-  console.log(create_response);
-
-  t.ok(create_response.Ok, "Alice should create an article");
-
-  const delete_input = {
-    article_addr: create_response.Ok
-  };
-
-  const delete_response = cameron.call(
-    "articles",
-    "main",
-    "delete_article",
-    delete_input
-  );
-
-  console.log(delete_response);
-
-  if (delete_response.hasOwnProperty("Err")) {
-    if (delete_response.Err.hasOwnProperty("Internal")) {
-      const error = JSON.parse(delete_response.Err.Internal).kind;
-
-      console.log(error);
-    }
-  } else if (delete_response.hasOwnProperty("Ok")) {
-    t.notOk(
-      delete_response.Ok === null,
-      "Cameron shouldn't be able to delete Alice's article"
-    );
-  }
-
-  t.end();
-});
-
-*/

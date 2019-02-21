@@ -22,13 +22,6 @@ pub struct Article {
 }
 
 impl Article {
-    pub fn new(title: &str, abst: &str, body: &str) -> Article {
-        Article {
-            title: title.to_owned(),
-            abst: abst.to_owned(),
-            body: body.to_owned()
-        }
-    }
     pub fn title(&self) -> String {
         self.title.clone()
     }
@@ -41,7 +34,9 @@ impl Article {
 }
 
 pub fn create_article(title: String, abst: String, body: String) -> ZomeApiResult<Address> {
-    let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
+    let article_entry = Entry::App("article".into(), Article{
+        title, abst, body
+    }.into());
 
     let article_addr = hdk::commit_entry(&article_entry)?;
 
@@ -55,7 +50,9 @@ pub fn get_article(article_addr: Address) -> ZomeApiResult<Option<Entry>> {
 }
 
 pub fn update_article(article_addr: Address, title: String, abst: String, body: String) -> ZomeApiResult<Address> {
-    let article_entry = Entry::App("article".into(), Article::new(&title, &abst, &body).into());
+    let article_entry = Entry::App("article".into(), Article{
+        title, abst, body
+    }.into());
 
     let new_addr = hdk::update_entry(article_entry, &article_addr)?;
 

@@ -1,6 +1,4 @@
-// Article zome
 #![feature(try_from)]
-#![feature(uniform_paths)]
 
 #[macro_use]
 extern crate hdk;
@@ -21,56 +19,21 @@ use hdk::{
         dna::entry_types::Sharing,
         entry::Entry,
         json::JsonString,
-        error::HolochainError,
-        time::Timeout
-    },
-    AGENT_ADDRESS,
-    AGENT_ID_STR,
-    DNA_NAME,
-    DNA_ADDRESS
+        error::HolochainError
+    }
 };
 use holochain_wasm_utils::api_serialization::{
-    get_links::GetLinksResult,
-    get_entry::{
-        GetEntryResult, GetEntryOptions, StatusRequestKind
-    },
+    get_links::GetLinksResult
 };
 
 pub mod article;
-use article::Article;
 pub mod keyword;
+pub mod utils;
+use article::Article;
 use keyword::Keyword;
+use utils::Env;
 
-#[derive(Serialize, Deserialize, Debug, DefaultJson)]
-pub struct Env {
-    dna_name: String,
-    dna_address: String,
-    agent_id: String,
-    agent_address: String,
-}
-
-fn handle_show_env() -> ZomeApiResult<Env> {
-    Ok(Env{
-        dna_name: DNA_NAME.to_string(),
-        dna_address: DNA_ADDRESS.to_string(),
-        agent_id: AGENT_ID_STR.to_string(),
-        agent_address: AGENT_ADDRESS.to_string(),
-    })
-}
-
-fn handle_get_sources_latest(address: Address) -> ZomeApiResult<GetEntryResult> {
-    let options = GetEntryOptions{status_request: StatusRequestKind::Latest, entry: false, headers: false, timeout: Timeout::new(10000)};
-
-    hdk::get_entry_result(&address, options)
-}
-
-fn handle_get_sources_initial(address: Address) -> ZomeApiResult<GetEntryResult> {
-    let options = GetEntryOptions{status_request: StatusRequestKind::Initial, entry: false, headers: false, timeout: Timeout::new(10000)};
-
-    hdk::get_entry_result(&address, options)
-}
-
-// Validation logic & links
+// The Articles DNA
 define_zome! {
     entries: [
 
@@ -132,19 +95,7 @@ define_zome! {
     show_env: {
         inputs: | |,
         outputs: |result: ZomeApiResult<Env>|,
-        handler: handle_show_env
-    }
-
-    get_sources_latest: {
-        inputs: |address: Address|,
-        outputs: |result: ZomeApiResult<GetEntryResult>|,
-        handler: handle_get_sources_latest
-    }
-
-    get_sources_initial: {
-        inputs: |address: Address|,
-        outputs: |result: ZomeApiResult<GetEntryResult>|,
-        handler: handle_get_sources_initial
+        handler: utils::handle_show_env
     }
 
     create_article: {
@@ -177,26 +128,20 @@ define_zome! {
         handler: article::get_authored_articles
     }
 
-    // create_keyword: {
-    //     inputs: |keyword: Keyword|,
-    //     outputs: |result: ZomeApiResult<Address>|,
-    //     handler: keyword::create_keyword
-    // }
-
     get_keyword: {
         inputs: |keyword_addr: Address|,
         outputs: |result: ZomeApiResult<Option<Entry>>|,
         handler: keyword::get_keyword
     }
 
-    link_article_from_keyword: {
-        inputs: |keyword: Keyword, article_addr: Address|,
+    create_and_link_keyword_to_article: {
+        inputs: |keyword: String, article_addr: Address|,
         outputs: |result: Result<(), ZomeApiError>|,
-        handler: keyword::link_article_from_keyword
+        handler: keyword::create_and_link_keyword_to_article
     }
 
     get_articles_from_keyword: {
-        inputs: |keyword_addr: Address|,
+        inputs: |keyword: String|,
         outputs: |result: ZomeApiResult<GetLinksResult>|,
         handler: keyword::get_articles_from_keyword
     }
@@ -205,17 +150,16 @@ define_zome! {
     traits: {
         hc_public [
             show_env,
-            get_sources_latest,
-            get_sources_initial,
+            get_meta_latest,
+            get_meta_initial,
             create_article,
             get_article,
             update_article,
             delete_article,
             author_article,
             get_authored_articles,
-            // create_keyword,
             get_keyword,
-            link_article_from_keyword,
+            create_and_link_keyword_to_article,
             get_articles_from_keyword
         ]
     }
