@@ -15,7 +15,21 @@ If you're looking to contribute, discuss, criticise or share ideas check out the
 
 ## Installation & Usage
 
-See the [releases](https://github.com/OmniProject/omni/releases).
+Please see the [releases](https://github.com/OmniProject/omni/releases) or follow the instructions below for using the most up-to-date version (although we don't guarantee that it will be stable, so if you just want a working demo use the latest release).
+
+First, install [Holochain](https://holochain.org) using the [`v0.0.4-alpha` release](https://github.com/holochain/holochain-rust/releases/tag/v0.0.4-alpha). Be sure to follow the [quick start guide](https://developer.holochain.org/start.html) for help installing pre-requisites (you don't have to use the Install Script if you use a binary release).
+
+After installing the Holochain pre-requisites and Holochain itself, clone or download this repo and then run the command 
+
+```npm run dev-install``` 
+
+from the project root. This will start up an Omni instance with the Holochain engine, as well as a Webpack dev server for the UI which updates whenever you make changes.
+
+After you've run the above command once, use 
+
+```npm run dev-start``` 
+
+instead.
 
 # Introduction
 
