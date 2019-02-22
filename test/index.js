@@ -87,9 +87,9 @@ scenario.runTape(
 );
 
 scenario.runTape(
-  "cameron get article addresses authored by alice",
+  "cameron get articles authored by alice",
   (t, { alice, cameron }) => {
-    t.plan(2);
+    t.plan(1);
 
     const input = {
       agent_addr: alice.agentId
@@ -97,13 +97,9 @@ scenario.runTape(
 
     const response = cameron.call("articles", "get_authored_articles", input);
 
-    // console.log(response);
+    console.log(response.Ok);
 
-    t.ok(response.Ok, "hdk::get_links shouldn't return Err");
-    t.ok(
-      response.Ok.addresses[0],
-      "Should return addresses of live articles Alice has created"
-    );
+    t.ok(response.Ok[0], "should return articles vec");
   }
 );
 
@@ -140,12 +136,9 @@ scenario.runTape(
       keyword: input.keyword
     });
 
-    console.log(response3.Ok.addresses);
+    console.log(response3.Ok);
 
-    t.ok(
-      response3.Ok.addresses[0],
-      "should retrieve article addresses from keyword"
-    );
+    t.ok(response3.Ok[0], "should retrieve articles from keyword");
   }
 );
 

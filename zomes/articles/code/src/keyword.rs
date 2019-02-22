@@ -40,12 +40,12 @@ pub fn create_and_link_keyword_to_article(keyword: String, article_addr: Address
     hdk::link_entries(&keyword_addr, &article_addr, "articles_from_keyword")
 }
 
-pub fn get_articles_from_keyword(keyword: String) -> ZomeApiResult<GetLinksResult> {
+pub fn get_articles_from_keyword(keyword: String) -> ZomeApiResult<Vec<ZomeApiResult<Entry>>> {
     let keyword_entry = Entry::App("keyword".into(), Keyword{
         keyword
     }.into());
 
     let keyword_addr = hdk::entry_address(&keyword_entry)?;
 
-    hdk::get_links(&keyword_addr, "articles_from_keyword")
+    hdk::get_links_and_load(&keyword_addr, "articles_from_keyword")
 }

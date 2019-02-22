@@ -55,7 +55,7 @@ define_zome! {
                     "%agent_id",
                     tag: "articles_from_agent",
                     validation_package: || {
-                        hdk::ValidationPackageDefinition::Entry
+                        hdk::ValidationPackageDefinition::ChainFull
                     },
                     validation: |_agent_addr: Address, _article_addr: Address, _validation_data: hdk::ValidationData | {
                         Ok(())
@@ -65,7 +65,7 @@ define_zome! {
                     "keyword",
                     tag: "articles_from_keyword",
                     validation_package: || {
-                        hdk::ValidationPackageDefinition::Entry
+                        hdk::ValidationPackageDefinition::ChainFull
                     },
                     validation: |_keyword_addr: Address, _article_addr: Address, _validation_data: hdk::ValidationData | {
                         Ok(())
@@ -124,7 +124,7 @@ define_zome! {
 
     get_authored_articles: {
         inputs: |agent_addr: Address|,
-        outputs: |result: ZomeApiResult<GetLinksResult>|,
+        outputs: |result: ZomeApiResult<Vec<ZomeApiResult<Entry>>>|,
         handler: article::get_authored_articles
     }
 
@@ -142,7 +142,7 @@ define_zome! {
 
     get_articles_from_keyword: {
         inputs: |keyword: String|,
-        outputs: |result: ZomeApiResult<GetLinksResult>|,
+        outputs: |result: ZomeApiResult<Vec<ZomeApiResult<Entry>>>|,
         handler: keyword::get_articles_from_keyword
     }
     ]
