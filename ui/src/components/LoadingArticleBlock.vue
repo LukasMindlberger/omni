@@ -4,8 +4,14 @@
       <div class="header">
         <div class="line"></div>
         <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
       </div>
       <div class="paragraph">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>
         <div class="line"></div>

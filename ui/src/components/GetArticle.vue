@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h3 class="ui large horizontal divider header">Get article from address</h3>
+  <div class="ui container">
+    <h3 class="ui horizontal divider header">Get article from address</h3>
     <div class="ui form" id="form-retrieve">
       <div class="field">
         <input

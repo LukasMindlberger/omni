@@ -12,4 +12,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#message {
+  word-wrap: break-word;
+}
+</style>

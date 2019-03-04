@@ -1,14 +1,12 @@
 <template>
-  <div>
+  <div class="ui container">
     <home-header class="component"></home-header>
-    <div class="ui container">
-      <div class="ui horizontal segments">
-        <div class="ui segment">
-          <submit-article class="component"></submit-article>
-        </div>
-        <div class="ui segment">
-          <get-article class="component"></get-article>
-        </div>
+    <div class="ui two column doubling stackable grid container">
+      <div class="column">
+        <submit-article class="component"></submit-article>
+      </div>
+      <div class="column">
+        <get-article class="component"></get-article>
       </div>
     </div>
   </div>

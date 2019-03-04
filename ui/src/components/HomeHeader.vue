@@ -1,7 +1,8 @@
 <template>
   <div>
     <h1 class="ui center aligned header">
-      <img src="src/assets/logo.png" alt="" />Omni
+      <img src="src/assets/logo.png" alt="" />
+      Omni
     </h1>
   </div>
 </template>
@@ -10,6 +11,6 @@
 
 <style scoped>
 .ui.center.header {
-  margin-top: 2em;
+  padding: 1em;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h3 class="ui large horizontal divider header">Commit a new article</h3>
+  <div class="ui container">
+    <h3 class="ui horizontal divider header">Commit a new article</h3>
 
     <div class="ui form" id="form-submit">
       <div class="field">
@@ -8,7 +8,7 @@
           rows="1"
           type="text"
           id="title"
-          placeholder="Article title"
+          placeholder="Title"
           v-model="submit_title"
           >{{ submit_title }}</textarea
         >
@@ -18,7 +18,7 @@
           rows="3"
           type="text"
           id="abstract"
-          placeholder="Article abstract"
+          placeholder="Abstract"
           v-model="submit_abstract"
           >{{ submit_abstract }}</textarea
         >
@@ -27,7 +27,7 @@
         <textarea
           type="text"
           id="body"
-          placeholder="Article body"
+          placeholder="Body"
           v-model="submit_body"
           >{{ submit_body }}</textarea
         >
