@@ -1,9 +1,10 @@
 {
-  "name": "omni",
+  "name": "omni-ui",
   "description": "Omni UI refactored in Vue.js",
   "version": "1.0.0",
   "author": "marcusnewton1 <marcus.newton@hotmail.com>",
   "license": "MIT",
+  "main": "src/main.js",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",

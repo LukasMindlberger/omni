@@ -12,7 +12,7 @@
       </div>
     </div>
     <loading-article-block v-if="is_loading"></loading-article-block>
-    <article-block v-if="is_article" :article="article"></article-block>
+    <article-block v-if="show_article" :article="article"></article-block>
     <zome-message
       class="negative"
       v-if="is_zome_message"
@@ -38,7 +38,7 @@ export default {
       },
       get_address: "",
       is_loading: false,
-      is_article: false,
+      show_article: false,
       is_zome_message: false,
       zome_message: ""
     };
@@ -52,7 +52,7 @@ export default {
     getArticle(get_address) {
       this.is_zome_message = false;
       this.is_loading = true;
-      this.is_article = false;
+      this.show_article = false;
       connect("ws:localhost:8888").then(({ call, close }) => {
         const params = {
           article_addr: get_address
@@ -83,7 +83,7 @@ export default {
           this.article.title = article.title;
           this.article.abstract = article.abst;
           this.article.body = article.body;
-          this.is_article = true;
+          this.show_article = true;
         }
       }
     },
@@ -95,6 +95,8 @@ export default {
     get_address() {
       if (this.get_address.length === 46) {
         this.getArticle(this.get_address);
+      } else if (this.get_address.length === 0) {
+        this.show_article = false;
       }
     }
   }
