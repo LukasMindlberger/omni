@@ -1,14 +1,17 @@
 <template>
   <div class="ui container">
     <h3 class="ui horizontal divider header">Get article from address</h3>
-    <div class="ui form" id="form-retrieve">
+    <div class="ui form">
       <div class="field">
-        <input
-          type="text"
-          id="address"
-          placeholder="e.g. QmTe9kPbDs2YXs7KGJ4FQxeeTAZ1ssncZeYuXiPt9U5d5T"
-          v-model="get_address"
-        />
+        <div class="ui icon input" :class="{ loading: is_loading }">
+          <input
+            type="text"
+            placeholder="e.g. QmTe9kPbDs2YXs7KGJ4FQxeeTAZ1ssncZeYuXiPt9U5d5T"
+            v-model="get_address"
+            @keyup.enter="getArticle(get_address)"
+          />
+          <i class="search icon"></i>
+        </div>
       </div>
     </div>
     <loading-article-block v-if="is_loading"></loading-article-block>
@@ -24,8 +27,8 @@
 
 <script>
 import { connect } from "@holochain/hc-web-client";
-import LoadingArticleBlock from "./LoadingArticleBlock";
 import ArticleBlock from "./ArticleBlock";
+import LoadingArticleBlock from "./LoadingArticleBlock";
 import ZomeMessage from "./ZomeMessage";
 
 export default {
@@ -92,7 +95,7 @@ export default {
     }
   },
   watch: {
-    get_address() {
+    get_address: function() {
       if (this.get_address.length === 46) {
         this.getArticle(this.get_address);
       } else if (this.get_address.length === 0) {

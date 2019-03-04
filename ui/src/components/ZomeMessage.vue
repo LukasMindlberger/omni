@@ -1,5 +1,5 @@
 <template>
-  <div class="ui message" id="message">
+  <div class="ui message">
     {{ message }}<i class="close icon" @click="$emit('dismissed')"></i>
   </div>
 </template>

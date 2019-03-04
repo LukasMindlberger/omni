@@ -2,50 +2,39 @@
   <div class="ui container">
     <h3 class="ui horizontal divider header">Commit a new article</h3>
 
-    <div class="ui form" id="form-submit">
+    <div class="ui form">
       <div class="field">
         <textarea
           rows="1"
           type="text"
-          id="title"
           placeholder="Title"
-          v-model="submit_title"
-          >{{ submit_title }}</textarea
+          v-model="article.title"
+          >{{ article.title }}</textarea
         >
       </div>
       <div class="field">
         <textarea
           rows="3"
           type="text"
-          id="abstract"
           placeholder="Abstract"
-          v-model="submit_abstract"
-          >{{ submit_abstract }}</textarea
+          v-model="article.abstract"
+          >{{ article.abstract }}</textarea
         >
       </div>
       <div class="field">
-        <textarea
-          type="text"
-          id="body"
-          placeholder="Body"
-          v-model="submit_body"
-          >{{ submit_body }}</textarea
-        >
+        <textarea type="text" placeholder="Body" v-model="article.body">{{
+          article.body
+        }}</textarea>
       </div>
       <button
         class="ui primary button"
         type="submit"
-        id="submitBtn"
         @click="submitForm()"
         :class="{ loading: is_loading }"
       >
         Submit
       </button>
-      <button
-        class="right floated ui secondary button"
-        id="clearBtn"
-        @click="clearForm()"
-      >
+      <button class="right floated ui secondary button" @click="clearForm()">
         Clear
       </button>
       <zome-message
@@ -69,9 +58,11 @@ export default {
   },
   data() {
     return {
-      submit_title: "",
-      submit_abstract: "",
-      submit_body: "",
+      article: {
+        title: "",
+        abstract: "",
+        body: ""
+      },
       is_zome_message: false,
       is_loading: false,
       submit_had_error: false,
@@ -80,9 +71,9 @@ export default {
   },
   methods: {
     clearForm() {
-      (this.submit_title = ""),
-        (this.submit_abstract = ""),
-        (this.submit_body = "");
+      (this.article.title = ""),
+        (this.article.abstract = ""),
+        (this.article.body = "");
     },
     clearMessage() {
       (this.is_zome_message = false),
@@ -94,9 +85,9 @@ export default {
       this.is_zome_message = false;
       connect("ws:localhost:8888").then(({ call, close }) => {
         const params = {
-          title: this.submit_title,
-          abst: this.submit_abstract,
-          body: this.submit_body
+          title: this.article.title,
+          abst: this.article.abstract,
+          body: this.article.body
         };
 
         call("test-instance/articles/create_article")(params)
