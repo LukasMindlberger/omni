@@ -1,0 +1,53 @@
+/* Non-Group Slide */
+.slide-fade-enter {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  animation: slide-fade-in 0.15s ease-out forwards;
+  transition: opacity 0.15s;
+}
+
+.slide-fade-leave {
+}
+
+.slide-fade-leave-active {
+  animation: slide-fade-out 0.15s ease-out forwards;
+  transition: opacity 0.15s;
+  opacity: 0;
+}
+
+@keyframes slide-fade-in {
+  from {
+    transform: translateY(10px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-fade-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(10px);
+  }
+}
+
+/* Non-Group Swap */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  transition: opacity 0.15s;
+}
+
+.fade-leave {
+}
+
+.fade-leave-active {
+  transition: opacity 0.15s;
+  opacity: 0;
+}

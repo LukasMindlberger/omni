@@ -14,19 +14,20 @@
         </div>
       </div>
     </div>
-    <loading-article-block v-if="is_loading"></loading-article-block>
-    <article-block v-if="show_article" :article="article"></article-block>
-    <zome-message
-      class="negative"
-      v-if="is_zome_message"
-      :message="zome_message"
-      @dismissed="clearMessage()"
-    ></zome-message>
+    <transition name="fade" mode="out-in">
+      <loading-article-block v-if="is_loading"></loading-article-block>
+      <article-block v-if="show_article" :article="article"></article-block>
+      <zome-message
+        class="negative"
+        v-if="is_zome_message"
+        :message="zome_message"
+        @dismissed="clearMessage()"
+      ></zome-message>
+    </transition>
   </div>
 </template>
 
 <script>
-import { connect } from "@holochain/hc-web-client";
 import ArticleBlock from "./ArticleBlock";
 import LoadingArticleBlock from "./LoadingArticleBlock";
 import ZomeMessage from "./ZomeMessage";
@@ -53,10 +54,15 @@ export default {
   },
   methods: {
     getArticle(get_address) {
-      this.is_zome_message = false;
+      this.clearArticleArea();
       this.is_loading = true;
-      this.show_article = false;
-      connect("ws:localhost:8888").then(({ call, close }) => {
+      if (get_address.length !== 46) {
+        this.zome_message = "Invalid hash address";
+        this.is_zome_message = true;
+        this.is_loading = false;
+        return;
+      }
+      this.$holochain.then(({ call, close }) => {
         const params = {
           article_addr: get_address
         };
@@ -65,7 +71,9 @@ export default {
           .then(response => {
             this.handleGetResponse(JSON.parse(response));
           })
-          .catch(error => console.error(error));
+          .catch(error => {
+            console.error(error);
+          });
       });
     },
     handleGetResponse(response) {
@@ -89,6 +97,10 @@ export default {
           this.show_article = true;
         }
       }
+    },
+    clearArticleArea() {
+      this.clearMessage();
+      this.show_article = false;
     },
     clearMessage() {
       this.is_zome_message = false;

@@ -1,5 +1,5 @@
 <template>
-  <div class="ui segment">
+  <div class="ui basic segment">
     <div class="ui center aligned header">{{ article.title }}</div>
     <div class="ui segment">{{ article.abstract }}</div>
     <div class="ui basic segment">
