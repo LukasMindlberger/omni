@@ -1,5 +1,4 @@
 #![feature(try_from)]
-
 #[macro_use]
 extern crate hdk;
 extern crate serde_json;
@@ -9,7 +8,6 @@ extern crate serde_derive;
 #[macro_use]
 extern crate holochain_core_types_derive;
 
-use boolinator::Boolinator;
 use hdk::{
     error::{
         ZomeApiResult, ZomeApiError
@@ -25,6 +23,7 @@ use hdk::{
 use holochain_wasm_utils::api_serialization::{
     get_links::GetLinksResult
 };
+use boolinator::Boolinator;
 
 pub mod article;
 pub mod keyword;

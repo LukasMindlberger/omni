@@ -1,33 +1,36 @@
 <template>
-  <div class="ui container">
-    <home-header class="component"></home-header>
-    <div class="ui two column doubling stackable grid container">
+  <div id="app">
+    <div class="ui grid text container focus">
       <div class="column">
-        <submit-article class="component"></submit-article>
-      </div>
-      <div class="column">
-        <get-article class="component"></get-article>
+        <div class="grid">
+          <div class="row">
+            <div class="ui basic segment">
+              <omni-header></omni-header>
+            </div>
+          </div>
+        </div>
+        <transition name="slide-fade" mode="out-in">
+          <router-view />
+        </transition>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import HomeHeader from "./components/HomeHeader.vue";
-import SubmitArticle from "./components/SubmitArticle.vue";
-import GetArticle from "./components/GetArticle.vue";
-
+import OmniHeader from "@/components/OmniHeader.vue";
 export default {
   components: {
-    HomeHeader,
-    SubmitArticle,
-    GetArticle
-  }
+    OmniHeader
+  },
+  name: "App"
 };
 </script>
 
 <style scoped>
-.component {
-  padding: 1em;
+.page-move {
+  transition: transform 1s;
 }
 </style>
+<style scoped src="@/assets/css/global-animations.css"></style>
+<style scoped src="@/assets/css/master.css"></style>
