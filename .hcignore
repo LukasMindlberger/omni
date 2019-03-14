@@ -1,7 +1,9 @@
 dist
 test
 ui
-bundle.json
+ui-demo
 LICENSE
 logo.png
+package-lock.json
+package.json
 README.md

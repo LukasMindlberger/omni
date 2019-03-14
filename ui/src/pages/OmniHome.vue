@@ -3,7 +3,7 @@
     <div class="ui horizontal divider">Menu</div>
     <div class="ui basic segment">
       <router-link
-        class="ui button"
+        class="ui primary button"
         exact
         :to="{ name: 'SubmitArticle', params: {} }"
       >
