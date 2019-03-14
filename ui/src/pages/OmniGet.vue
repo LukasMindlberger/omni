@@ -80,10 +80,14 @@ export default {
       }
       this.$holochain.then(({ call, close }) => {
         const params = {
-          article_addr: get_address
+          instance_id: "test-instance",
+          zome: "articles",
+          function: "get_article",
+          params: {
+            article_addr: get_address
+          }
         };
-
-        call("test-instance/articles/get_article")(params)
+        call("call")(params)
           .then(response => {
             this.handleGetResponse(JSON.parse(response));
           })
