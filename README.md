@@ -16,13 +16,13 @@ If you're looking to contribute, discuss, criticise or share ideas check out the
 
 Please see the [releases](https://github.com/OmniProject/omni/releases) or follow the instructions below for using the most up-to-date version (although we don't guarantee that it will be stable, so if you just want a working demo use the latest release).
 
-First, install [Holochain](https://holochain.org) using the [`v0.0.6-alpha` release](https://github.com/holochain/holochain-rust/releases/tag/v0.0.6-alpha). Be sure to follow the [quick start guide](https://developer.holochain.org/start.html) for help installing pre-requisites (you don't have to use the Install Script if you use a binary release).
+First, install [Holochain](https://holochain.org) using the [`v0.0.6-alpha` release](https://github.com/holochain/holochain-rust/releases/tag/v0.0.6-alpha). Be sure to follow the [quick start guide](https://developer.holochain.org/start.html) for help installing pre-requisites (you don't have to use the Install Script if you use a binary release from the above link).
 
 After installing the Holochain pre-requisites and Holochain itself, clone or download this repo and then run the command
 
 `npm run dev-install`
 
-from the project root. This will install the required node packages for both front-end development and backend testing.
+from the project root. This will install the required node packages for both front-end development and back-end testing.
 
 After you've run the above command, use:
 
