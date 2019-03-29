@@ -21,15 +21,14 @@
         </div>
       </div>
     </div>
-    <transition name="fade" mode="out-in">
-      <loading-article-block v-if="is_loading"></loading-article-block>
-      <article-block v-if="show_article" :article="article"></article-block>
+    <transition name="slide-fade" mode="out-in">
       <zome-message
         class="negative"
         v-if="is_zome_message"
         :message="zome_message"
         @dismissed="clearMessage()"
       ></zome-message>
+      <article-block v-if="show_article" :article="article"></article-block>
     </transition>
   </div>
 </template>

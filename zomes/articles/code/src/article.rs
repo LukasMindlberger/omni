@@ -12,7 +12,11 @@ use hdk::{
     },
     AGENT_ADDRESS
 };
-use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
+use holochain_wasm_utils::api_serialization::{
+    get_links::{
+        GetLinksResult, GetLinksOptions
+    }
+};
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson)]
 pub struct Article {
@@ -65,6 +69,10 @@ pub fn delete_article(article_addr: Address) -> ZomeApiResult<()> {
     hdk::remove_entry(&article_addr)
 }
 
-pub fn get_authored_articles(agent_addr: Address) -> ZomeApiResult<Vec<ZomeApiResult<Entry>>> {
-    hdk::get_links_and_load(&agent_addr, "articles_from_agent")
+pub fn get_authored_articles(agent_addr: Address) -> ZomeApiResult<GetLinksResult> {
+    hdk::get_links(&agent_addr, "articles_from_agent")
+}
+
+pub fn get_my_articles() -> ZomeApiResult<GetLinksResult> {
+    hdk::get_links(&AGENT_ADDRESS, "articles_from_agent")
 }

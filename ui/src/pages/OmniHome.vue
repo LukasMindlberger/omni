@@ -5,17 +5,20 @@
       <router-link
         class="ui primary button"
         exact
-        :to="{ name: 'SubmitArticle', params: {} }"
+        :to="{ name: 'Submit Article', params: {} }"
+        >Submit an article</router-link
       >
-        Submit an article
-      </router-link>
       <router-link
         class="ui button"
         exact
-        :to="{ name: 'GetArticle', params: {} }"
+        :to="{ name: 'Repository', params: {} }"
+        >Search articles</router-link
       >
-        Search articles
-      </router-link>
+      <router-link
+        class="ui secondary button"
+        :to="{ name: 'Profiles', params: {} }"
+        >User profiles</router-link
+      >
     </div>
   </div>
 </template>
@@ -25,7 +28,8 @@ import OmniHeader from "@/components/OmniHeader";
 export default {
   components: {
     OmniHeader
-  }
+  },
+  methods: {}
 };
 </script>
 

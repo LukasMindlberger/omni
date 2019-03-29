@@ -17,6 +17,7 @@
   opacity: 0;
 }
 
+/* Slide keyframes */
 @keyframes slide-fade-in {
   from {
     transform: translateY(5px);

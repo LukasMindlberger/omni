@@ -3,10 +3,18 @@
 import Vue from "vue";
 import App from "./App";
 import router from "./router";
-import { connect } from "@holochain/hc-web-client";
+import { store } from "./store/store";
 
+import { connect } from "@holochain/hc-web-client";
 Vue.prototype.$holochain = connect("ws:localhost:8888");
+
 Vue.prototype.DNA_OMNI = "test-instance";
+
+// Custom directive to change browser window title
+Vue.directive("title", {
+  inserted: (el, binding) => (document.title = binding.value),
+  update: (el, binding) => (document.title = binding.value)
+});
 
 Vue.config.productionTip = false;
 
@@ -14,6 +22,7 @@ Vue.config.productionTip = false;
 new Vue({
   el: "#app",
   router,
+  store,
   components: { App },
   template: "<App/>"
 });

@@ -1,7 +1,8 @@
 <template>
   <transition name="slide-fade">
     <div class="ui message" id="message">
-      {{ message }}<i class="close icon" @click="$emit('dismissed')"></i>
+      {{ message }}
+      <i class="close icon" @click="$emit('dismissed')"></i>
     </div>
   </transition>
 </template>

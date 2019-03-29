@@ -21,9 +21,9 @@
         >
       </div>
       <div class="field">
-        <textarea type="text" placeholder="Body" v-model.lazy="article.body">{{
-          article.body
-        }}</textarea>
+        <textarea type="text" placeholder="Body" v-model.lazy="article.body">
+          {{ article.body }}</textarea
+        >
       </div>
       <zome-message
         class="positive"
@@ -31,7 +31,8 @@
         :class="{ negative: submit_had_error }"
         :message="zome_message"
         @dismissed="clearMessage()"
-      ></zome-message>
+      >
+      </zome-message>
       <button
         class="ui primary button"
         @click.prevent="submitForm()"
@@ -71,6 +72,7 @@ export default {
       is_zome_message: false,
       is_loading: false,
       submit_had_error: false,
+      response: "",
       zome_message: ""
     };
   },
@@ -109,6 +111,8 @@ export default {
       });
     },
     handleSubmitResponse(response) {
+      this.response = response;
+      this.show_copied = false;
       this.is_loading = false;
       if (response.Err) {
         (this.zome_message = "Error: " + JSON.stringify(response.Err)),
@@ -118,6 +122,14 @@ export default {
           (this.submit_had_error = false);
       }
       this.is_zome_message = true;
+    },
+    toClipboard(content) {
+      const dummy = document.createElement("input");
+      document.body.appendChild(dummy);
+      dummy.setAttribute("value", content);
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
     }
   }
 };

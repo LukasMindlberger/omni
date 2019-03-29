@@ -23,7 +23,6 @@ use hdk::{
 use holochain_wasm_utils::api_serialization::{
     get_links::GetLinksResult
 };
-use boolinator::Boolinator;
 
 pub mod article;
 pub mod keyword;
@@ -35,7 +34,6 @@ use utils::Env;
 // The Articles DNA
 define_zome! {
     entries: [
-
         entry!(
             name: "article",
             description: "An article",
@@ -44,10 +42,8 @@ define_zome! {
             validation_package: || {
                 hdk::ValidationPackageDefinition::Entry
             },
-            validation: |article: Article, _validation_data: hdk::ValidationData| {(
-                    (article.title().len() < 300) & (article.abst().len() < 900)
-                )
-                .ok_or_else(|| String::from("Article struct is invalid"))
+            validation: |article: Article, _validation_data: hdk::ValidationData| {
+                 Ok(())
             },
             links: [
                 from!(
@@ -123,8 +119,14 @@ define_zome! {
 
     get_authored_articles: {
         inputs: |agent_addr: Address|,
-        outputs: |result: ZomeApiResult<Vec<ZomeApiResult<Entry>>>|,
+        outputs: |result: ZomeApiResult<GetLinksResult>|,
         handler: article::get_authored_articles
+    }
+
+    get_my_articles: {
+        inputs: | |,
+        outputs: |result: ZomeApiResult<GetLinksResult>|,
+        handler: article::get_my_articles
     }
 
     get_keyword: {
@@ -157,6 +159,7 @@ define_zome! {
             delete_article,
             author_article,
             get_authored_articles,
+            get_my_articles,
             get_keyword,
             create_and_link_keyword_to_article,
             get_articles_from_keyword
