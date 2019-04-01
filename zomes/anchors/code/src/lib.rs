@@ -20,7 +20,7 @@ use holochain_wasm_utils::api_serialization::{
     get_links::GetLinksResult
 };
 
-#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+#[derive(Serialize, Deserialize, Debug, DefaultJson, Clone)]
 pub struct Anchor {
     anchor: String
 }
@@ -43,11 +43,12 @@ define_zome! {
             name: "anchor",
             description: "An anchor, known by all users, to link data from",
             sharing: Sharing::Public,
-            native_type: Anchor,
+
             validation_package: || {
                 hdk::ValidationPackageDefinition::Entry
             },
-            validation: |_anchor: Anchor, _validation_data: hdk::ValidationData| {
+
+            validation: |_validation_data: hdk::EntryValidationData<Anchor>| {
                 Ok(())
             },
             links: [
@@ -55,9 +56,9 @@ define_zome! {
                     "%agent_id",
                     tag: "anchor_to_users",
                     validation_package: || {
-                        hdk::ValidationPackageDefinition::ChainFull
+                        hdk::ValidationPackageDefinition::Entry
                     },
-                    validation: |_agent_addr: Address, _anchor_addr: Address, _validation_data: hdk::ValidationData | {
+                    validation: |_validation_data: hdk::LinkValidationData | {
                         Ok(())
                     }
                 )

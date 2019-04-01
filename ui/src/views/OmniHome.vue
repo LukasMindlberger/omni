@@ -14,11 +14,6 @@
         :to="{ name: 'Repository', params: {} }"
         >Search articles</router-link
       >
-      <router-link
-        class="ui secondary button"
-        :to="{ name: 'Profiles', params: {} }"
-        >User profiles</router-link
-      >
     </div>
   </div>
 </template>

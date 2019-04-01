@@ -18,7 +18,7 @@ use holochain_wasm_utils::api_serialization::{
     }
 };
 
-#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+#[derive(Serialize, Deserialize, Debug, DefaultJson, Clone)]
 pub struct Article {
     title: String,
     abst: String,

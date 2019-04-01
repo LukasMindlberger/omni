@@ -19,7 +19,7 @@ use holochain_wasm_utils::api_serialization::{
     },
 };
 
-#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+#[derive(Serialize, Deserialize, Debug, DefaultJson, Clone)]
 pub struct Env {
     dna_name: String,
     dna_address: String,

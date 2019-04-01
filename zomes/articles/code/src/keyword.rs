@@ -11,7 +11,7 @@ use hdk::{
 };
 use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
 
-#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+#[derive(Serialize, Deserialize, Debug, DefaultJson, Clone)]
 pub struct Keyword {
     keyword: String,
 }

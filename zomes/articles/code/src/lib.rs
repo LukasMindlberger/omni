@@ -38,11 +38,11 @@ define_zome! {
             name: "article",
             description: "An article",
             sharing: Sharing::Public,
-            native_type: Article,
+
             validation_package: || {
                 hdk::ValidationPackageDefinition::Entry
             },
-            validation: |article: Article, _validation_data: hdk::ValidationData| {
+            validation: |_validation_data: hdk::EntryValidationData<Article>| {
                  Ok(())
             },
             links: [
@@ -50,9 +50,9 @@ define_zome! {
                     "%agent_id",
                     tag: "articles_from_agent",
                     validation_package: || {
-                        hdk::ValidationPackageDefinition::ChainFull
+                        hdk::ValidationPackageDefinition::Entry
                     },
-                    validation: |_agent_addr: Address, _article_addr: Address, _validation_data: hdk::ValidationData | {
+                    validation: |_validation_data: hdk::LinkValidationData | {
                         Ok(())
                     }
                 ),
@@ -60,9 +60,9 @@ define_zome! {
                     "keyword",
                     tag: "articles_from_keyword",
                     validation_package: || {
-                        hdk::ValidationPackageDefinition::ChainFull
+                        hdk::ValidationPackageDefinition::Entry
                     },
-                    validation: |_keyword_addr: Address, _article_addr: Address, _validation_data: hdk::ValidationData | {
+                    validation: |_validation_data: hdk::LinkValidationData | {
                         Ok(())
                     }
                 )
@@ -73,11 +73,11 @@ define_zome! {
             name: "keyword",
             description: "A keyword to help categorise content",
             sharing: Sharing::Public,
-            native_type: Keyword,
+
             validation_package: || {
                 hdk::ValidationPackageDefinition::Entry
             },
-            validation: |_keyword: Keyword, _validation_data: hdk::ValidationData| {
+            validation: |_validation_data: hdk::EntryValidationData<Keyword>| {
                 Ok(())
             }
         )
