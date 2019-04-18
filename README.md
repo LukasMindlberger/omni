@@ -35,11 +35,14 @@ The Omni Project is helping to bring about the next generation of scholarly comm
 **Omni** is the first Holochain app to come out of The Omni Project. List of projects:
 * [Omni](https://github.com/OmniProject/omni) (distributed scholarly network for direct scholarly communication, treated as first point-of-access for all other Omni Project applications)
 * [Omni-Journal-Builder](https://github.com/OmniProject/omni-journal-builder) (setup wizard for new Open Access Omni journals)
+* Omni-Data-Commons (a protocol for bridging and storing large scientific datasets with sharding)
+* Omni-Knowledge-Commons (distributed graph of knowledge from all Omni journals)
 * Fog (distributed computing network for general computation, powered by mutual credit)
+* *TBD* (free reference manager)
 
 # Problems
 
-A lot of useful (but 'unsexy') work goes unpublished (e.g. null results, replication studies, full data sets, code, mistakes worth learning from). This work should not go to waste. Scholars should find it easy to upload these findings to a shared digital space, and should be acknowledged for carrying out an essential part of the scientific process.
+A lot of useful - but 'unpublishable' - work goes unpublished (e.g. null results, replication studies, full data sets, code, mistakes worth learning from). This work should not go to waste. Scholars should find it easy to upload these findings to a shared digital space, and should be acknowledged for carrying out an essential part of the scientific process.
 
 The reputation of researchers in the current model is based on an overly reductive indicator of value, the impact factor. Number of reads and citations of articles is [not enough to accurately represent](http://backreaction.blogspot.com/2017/03/academia-is-fucked-up-so-why-isnt.html) the value researchers contribute to the knowledge commons. As scholarly communications is further digitised, we see an opportunity to make visible the **many kinds** of contributions people make to the knowledge commons and publicly recognise them for these efforts.
 
