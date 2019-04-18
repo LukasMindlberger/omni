@@ -30,7 +30,7 @@ This will start up an Omni instance with the Holochain engine, as well as a Webp
 
 # Introduction
 
-The Omni Project is helping to bring about the next generation of scholarly communications. The current scholarly publishing system is broken—new knowledge that benefits everyone is locked behind expensive paywalls and certain individuals and companies gain disproportionate levels of power and influence, allowing them to shape the system to work for them and not for the research ecosystem as a whole. The Omni Project is making it easy to do scholarly publishing which is fair and benefits everyone.
+The Omni Project is helping to bring about the next generation of scholarly communication. The current scholarly publishing system is broken—new knowledge that benefits everyone is locked behind expensive paywalls and certain individuals and companies gain disproportionate levels of power and influence, allowing them to shape the system to work for them and not for the research ecosystem as a whole. The Omni Project is making it easy to do scholarly publishing which is fair and benefits everyone.
 
 **Omni** is the first Holochain app to come out of The Omni Project. List of projects:
 * [Omni](https://github.com/OmniProject/omni) (distributed scholarly network for direct scholarly communication, treated as main access point for all other Omni Project applications)
