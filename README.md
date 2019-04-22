@@ -44,6 +44,8 @@ List of projects:
 
 # Problems
 
+![Source: Twitter account @pedromics](https://pbs.twimg.com/media/DoMNn4rXsAAc_Mu.jpg)
+
 A lot of useful - but 'unpublishable' - work goes unpublished (e.g. null results, replication studies, full data sets, code, mistakes worth learning from). This work should not go to waste. Scholars should find it easy to upload these findings to a shared digital space, and should be acknowledged for carrying out an essential part of the scientific process.
 
 The reputation of researchers in the current model is based on an overly reductive indicator of value, the impact factor. Number of reads and citations of articles is [not enough to accurately represent](http://backreaction.blogspot.com/2017/03/academia-is-fucked-up-so-why-isnt.html) the value researchers contribute to the knowledge commons. As scholarly communications is further digitised, we see an opportunity to make visible the **many kinds** of contributions people make to the knowledge commons and publicly recognise them for these efforts.
