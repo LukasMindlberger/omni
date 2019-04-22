@@ -44,7 +44,7 @@ List of projects:
 
 # Problems
 
-![Source: Twitter account @pedromics](https://pbs.twimg.com/media/DoMNn4rXsAAc_Mu.jpg)
+![Source: Twitter account @pedromics](https://pbs.twimg.com/media/DoMNn4rXsAAc_Mu.jpg =250x250)
 
 A lot of useful - but 'unpublishable' - work goes unpublished (e.g. null results, replication studies, full data sets, code, mistakes worth learning from). This work should not go to waste. Scholars should find it easy to upload these findings to a shared digital space, and should be acknowledged for carrying out an essential part of the scientific process.
 
