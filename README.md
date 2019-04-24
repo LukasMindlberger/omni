@@ -8,7 +8,7 @@
 
 </br></br></br>
 
-If you're looking to contribute, discuss, criticise or share ideas check out the [**project boards**](https://github.com/OmniProject/omni/projects) or talk with collaborators in our [**Holochain Mattermost channel**](https://chat.holochain.org/appsup/channels/app-omni).
+Check out the [**project boards**](https://github.com/OmniProject/omni/projects) or talk with collaborators in our [**Holochain Mattermost channel**](https://chat.holochain.org/appsup/channels/app-omni).
 
 ## Installation & Usage
 
@@ -39,10 +39,10 @@ List of projects:
 * [Omni-Journal-Builder](https://github.com/OmniProject/omni-journal-builder) (setup wizard for new Open Access Omni journals)
 * Omni-Data-Commons (a protocol for bridging and storing large scientific datasets with sharding)
 * Omni-Knowledge-Commons (distributed graph of knowledge from all Omni journals)
-* Fog (distributed computing network for general computation, powered by mutual credit)
-* *TBD* (free reference manager)
+* Omni-Network-Computing (distributed computing network for general computation, powered by mutual credit)
+* Omni-Reference-Manager (free reference manager)
 
-# Problems
+# State of Scholarly Communication
 
 <p align="center">
   <img width="350" height="350" src="https://pbs.twimg.com/media/DoMNn4rXsAAc_Mu.jpg">
@@ -60,7 +60,7 @@ We've been interested in the developments of social networking platforms and how
 
 # Omni: A fully accessible digital space for sharing and discussing new knowledge
 
-Omni is the first of a suite of Holochain apps which will help the scholarly commons to flourish. Omni is an **open source** and **distributed** social network platform enabling scholars to communicate and share data directly with each other, with no third party intermediating these value exchanges.
+Omni is the first of a suite of Holochain apps which will help the scholarly commons to flourish. Omni is a distributed social network platform enabling scholars to communicate and share data directly with each other, with no third party intermediating these value exchanges.
 
 Data is stored in a Holochain _Distributed Hash Table (DHT)_, which is a distributed database not hosted by any central party, but is supported by all users of Omni using their currently unused spare computing resources—**no servers**. As long as some users are running the Omni application, no one can shut it down.
 
