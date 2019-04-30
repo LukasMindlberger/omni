@@ -1,6 +1,12 @@
 <template>
-  <div class="ui basic segment">
-    <h3 class="ui horizontal divider header">Submit article to Omni</h3>
+  <div>
+    <!-- <h3 class="ui horizontal divider header">Submit article to Omni</h3> -->
+    <p>
+      You can add new articles to the Omni repository using the form below. It
+      is obviously very basic in its current form, but more features for
+      writing, editing and formatting are being developed.
+    </p>
+    <div class="ui hidden divider"></div>
     <div class="ui form">
       <div class="field">
         <textarea
@@ -34,14 +40,14 @@
       >
       </zome-message>
       <button
-        class="ui primary button"
+        class="ui left floated primary button"
         @click.prevent="submitForm()"
         :class="{ loading: is_loading }"
       >
         Submit
       </button>
       <button
-        class="right floated ui secondary button"
+        class="ui right floated secondary button"
         @click.prevent="
           clearMessage();
           clearForm();
@@ -54,10 +60,18 @@
 </template>
 
 <script>
-import OmniHeader from "@/components/OmniHeader";
+import OmniHeader from "@/components/common/OmniHeader";
 import ZomeMessage from "@/components/common/ZomeMessage";
 
 export default {
+  mounted() {
+    this.$store.commit("updateTitle", "Omni | Submit");
+    this.$store.commit("updateNavText", "Submit");
+  },
+  beforeDestroy() {
+    this.$store.commit("updateTitle", "Omni");
+    this.$store.commit("updateNavText", "Navigation");
+  },
   components: {
     OmniHeader,
     ZomeMessage

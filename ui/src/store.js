@@ -5,31 +5,31 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user_anchor: "",
-    users: ""
+    page_title: "Omni",
+    nav_text: "Navigation"
   },
   getters: {
-    user_anchor: state => {
-      return state.user_anchor;
+    pageTitle: state => {
+      return state.page_title;
     },
-    users: state => {
-      return state.users;
+    navText: state => {
+      return state.nav_text;
     }
   },
   mutations: {
-    anchor_users: (state, payload) => {
-      state.user_anchor = payload;
+    updateTitle: (state, payload) => {
+      state.page_title = payload;
     },
-    users: (state, payload) => {
-      state.users = payload;
+    updateNavText: (state, payload) => {
+      state.nav_text = payload;
     }
   },
   actions: {
-    anchor_users: ({ commit }, payload) => {
-      commit("anchor_users", payload);
+    updateTitle: ({ commit }, payload) => {
+      commit("updateTitle", payload);
     },
-    users: ({ commit }, payload) => {
-      commit("users", payload);
+    updateNavText: ({ commit }, payload) => {
+      commit("updateNavText", payload);
     }
   }
 });

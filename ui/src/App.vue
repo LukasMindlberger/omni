@@ -1,57 +1,42 @@
 <template>
   <div id="app">
-    <div class="ui grid text container focus">
+    <div class="ui grid text container" :class="{ focus: true }">
+      <!-- TODO: dynamic focus class global variable -->
       <div class="column">
         <div class="grid">
-          <div class="row">
-            <div class="ui basic segment">
-              <omni-header></omni-header>
-            </div>
-          </div>
+          <omni-header v-if="this.$route.name === 'Home'"></omni-header>
         </div>
-        <transition name="slide-fade" mode="out-in">
+        <omni-nav-bar></omni-nav-bar>
+        <div class="ui basic segment">
           <router-view v-title="title" />
-        </transition>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import OmniHeader from "@/components/OmniHeader.vue";
+import OmniHeader from "@/components/common/OmniHeader.vue";
+import OmniNavBar from "@/components/common/OmniNavBar";
+import { mapGetters } from "vuex";
+
 export default {
   components: {
-    OmniHeader
+    OmniHeader,
+    OmniNavBar
   },
   computed: {
-    title: function() {
-      if (this.$route.name === "Home") {
-        return "Omni";
-      }
-      return "Omni | " + this.$route.name;
-    }
+    // title: function() {
+    //   if (this.$route.path === "/") {
+    //     return "Omni";
+    //   }
+    //   return "Omni | " + this.$route.name;
+    // }
+    ...mapGetters({
+      title: "pageTitle"
+    })
   },
-  name: "App",
-  beforeCreate() {
-    // Init
-    this.$holochain.then(({ call, close }) => {
-      const params = {
-        instance_id: this.DNA_OMNI,
-        zome: "users",
-        function: "register_self",
-        params: {
-          anchor: "all_users"
-        }
-      };
-      call("call")(params)
-        .then(response => {
-          this.$store.dispatch("anchor_users", JSON.parse(response).Ok);
-        })
-        .catch(error => {
-          console.error(error);
-        });
-    });
-  }
+  name: "App"
 };
 </script>
 

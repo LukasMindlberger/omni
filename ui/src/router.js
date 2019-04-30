@@ -1,11 +1,12 @@
 import Vue from "vue";
 import Router from "vue-router";
 
-import OmniHome from "@/views/OmniHome";
 import OmniSubmitArticle from "@/views/OmniSubmit";
 import OmniGetArticle from "@/views/OmniGet";
-import OmniHeader from "@/components/OmniHeader";
-import ZomeMessage from "@/components/common/ZomeMessage";
+import Communities from "@/views/communities/Communities";
+import Community from "@/views/communities/Community";
+import Dummy from "@/components/common/Dummy";
+import Lost from "@/components/common/Lost";
 
 Vue.use(Router);
 
@@ -14,17 +15,32 @@ export default new Router({
     {
       path: "/",
       name: "Home",
-      component: OmniHome
+      component: Dummy
     },
     {
       path: "/submit",
-      name: "Submit Article",
+      name: "Submit",
       component: OmniSubmitArticle
     },
     {
       path: "/repository",
       name: "Repository",
       component: OmniGetArticle
+    },
+    {
+      path: "/communities",
+      name: "Communities",
+      component: Communities
+    },
+    {
+      path: "/c/astrophysics",
+      name: "Astrophysics",
+      component: Community
+    },
+    {
+      path: "*",
+      name: "Lost",
+      component: Lost
     }
   ]
 });

@@ -1,11 +1,13 @@
 <template>
-  <div class="ui basic segment">
-    <div class="ui center aligned header">{{ article.title }}</div>
-    <div class="ui segment">{{ article.abstract }}</div>
+  <article class="ui basic segment">
+    <header>
+      <h1 class="ui center aligned header">{{ article.title }}</h1>
+      <p class="ui segment">{{ article.abstract }}</p>
+    </header>
     <div class="ui basic segment">
-      <div style="white-space: pre-wrap">{{ article.body }}</div>
+      <p style="white-space: pre-wrap">{{ article.body }}</p>
     </div>
-  </div>
+  </article>
 </template>
 
 <script>

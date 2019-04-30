@@ -1,7 +1,12 @@
 <template>
-  <div class="ui basic segment">
-    <h3 class="ui horizontal divider header">Get article from address</h3>
-    <div class="ui form">
+  <div>
+    <!-- <h3 class="ui horizontal divider header">Get article from address</h3> -->
+    <p>
+      If you have the entry address for an Omni article, you can retrieve it
+      directly using the text box below.
+    </p>
+    <div class="ui hidden divider"></div>
+    <form class="ui form">
       <div class="field">
         <div class="ui icon input" :class="{ loading: is_loading }">
           <input
@@ -20,7 +25,7 @@
           ></i>
         </div>
       </div>
-    </div>
+    </form>
     <transition name="slide-fade" mode="out-in">
       <zome-message
         class="negative"
@@ -39,6 +44,14 @@ import LoadingArticleBlock from "@/components/articles/LoadingArticleBlock";
 import ZomeMessage from "@/components/common/ZomeMessage";
 
 export default {
+  mounted() {
+    this.$store.commit("updateTitle", "Omni | Repository");
+    this.$store.commit("updateNavText", "Repository");
+  },
+  beforeDestroy() {
+    this.$store.commit("updateTitle", "Omni");
+    this.$store.commit("updateNavText", "Navigation");
+  },
   data() {
     return {
       article: {
